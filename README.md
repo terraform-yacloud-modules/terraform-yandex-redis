@@ -4,7 +4,7 @@ Terraform module which creates Yandex Cloud [Managed Service for Redis](https://
 
 ## Usage
 
-See [`examples`](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/tree/main/examples) directory for working examples to reference:
+See [`examples`](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/tree/main/examples) directory for working examples.
 
 ### Redis cluster without persistence
 
