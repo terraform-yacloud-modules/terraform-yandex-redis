@@ -1,9 +1,9 @@
 locals {
   zone   = "ru-central1-a"
-  folder = "xxxx"
+  folder = "folder_id"
 
-  network_name = "default"
-  subnet_name  = "default-ru-central1-a"
+  network_name = "network_name"
+  subnet_name  = "subnet_name"
 }
 
 data "yandex_vpc_network" "private" {
