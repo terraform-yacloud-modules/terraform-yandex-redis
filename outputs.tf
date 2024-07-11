@@ -3,6 +3,10 @@ output "fqdn" {
   value       = yandex_mdb_redis_cluster.this.host[*].fqdn
 }
 
+output "fqdn_redis" {
+  value = "c-${yandex_mdb_redis_cluster.this.id}.rw.mdb.yandexcloud.net"
+}
+
 output "password" {
   description = "The password of the host"
   value       = var.password
