@@ -1,18 +1,19 @@
 locals {
   zone   = "ru-central1-a"
-  folder = "your_folder_id"
+  folder_id = "folder_id"
 
-  network_name = "private"
-  subnet_name  = "private-a"
+  network_name = "default"
+  subnet_name  = "default-ru-central1-a"
 }
 
 data "yandex_vpc_network" "private" {
-  folder_id = local.folder
+  folder_id = local.folder_id
   name      = local.network_name
 }
 
 data "yandex_vpc_subnet" "private" {
-  name = local.subnet_name
+  folder_id = local.folder_id
+  name      = local.subnet_name
 }
 
 module "redis_simple" {
@@ -20,8 +21,8 @@ module "redis_simple" {
 
   name        = "cache"
   description = "Cache in-memory without sync to disk"
-
-  network_id = data.yandex_vpc_network.private.id
+  folder_id   = local.folder_id
+  network_id  = data.yandex_vpc_network.private.id
 
   persistence_mode = "OFF"
   password         = "secretpassword"

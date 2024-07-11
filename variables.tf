@@ -156,7 +156,7 @@ variable "resource_preset_id" {
 variable "disk_size" {
   description = "Volume of the storage available to a host, in gigabytes"
   type        = number
-  default     = 8
+  default     = 20
 }
 
 variable "disk_type_id" {
