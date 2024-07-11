@@ -3,6 +3,11 @@ output "fqdn" {
   value       = yandex_mdb_redis_cluster.this.host[*].fqdn
 }
 
+output "password" {
+  description = "The password of the host"
+  value       = var.password
+}
+
 output "shard_name" {
   description = "The name of the shard to which the host belongs"
   value       = yandex_mdb_redis_cluster.this.host[*].shard_name
