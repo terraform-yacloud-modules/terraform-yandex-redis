@@ -1,5 +1,5 @@
 locals {
-  zone   = "ru-central1-a"
+  zone      = "ru-central1-a"
   folder_id = "folder_id"
 
   network_name = "default"

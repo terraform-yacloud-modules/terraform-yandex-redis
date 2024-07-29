@@ -48,5 +48,5 @@ No inputs.
 | Name | Description |
 |------|-------------|
 | <a name="output_fqdn"></a> [fqdn](#output\_fqdn) | The fully qualified domain name of the cluster |
-| <a name="output_status"></a> [status](#output\_status) | Status of the cluster |
+| <a name="output_password"></a> [password](#output\_password) | The password of the host |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

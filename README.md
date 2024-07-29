@@ -121,7 +121,7 @@ No modules.
 | <a name="input_day"></a> [day](#input\_day) | Day of week for maintenance window if window type is weekly | `string` | `"MON"` | no |
 | <a name="input_deletion_protection"></a> [deletion\_protection](#input\_deletion\_protection) | Inhibits deletion of the cluster | `bool` | `false` | no |
 | <a name="input_description"></a> [description](#input\_description) | Description of the Redis cluster | `string` | `"Redis cluster"` | no |
-| <a name="input_disk_size"></a> [disk\_size](#input\_disk\_size) | Volume of the storage available to a host, in gigabytes | `number` | `8` | no |
+| <a name="input_disk_size"></a> [disk\_size](#input\_disk\_size) | Volume of the storage available to a host, in gigabytes | `number` | `20` | no |
 | <a name="input_disk_type_id"></a> [disk\_type\_id](#input\_disk\_type\_id) | Type of the storage of Redis hosts - environment default is used if missing | `string` | `"network-ssd"` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | Deployment environment of the Redis cluster. Can be either PRESTABLE or PRODUCTION | `string` | `"PRODUCTION"` | no |
 | <a name="input_folder_id"></a> [folder\_id](#input\_folder\_id) | The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used | `string` | `null` | no |
@@ -151,8 +151,10 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_fqdn"></a> [fqdn](#output\_fqdn) | The fully qualified domain name of the host |
+| <a name="output_fqdn"></a> [fqdn](#output\_fqdn) | List of FQDNs for Redis cluster hosts |
+| <a name="output_fqdn_redis"></a> [fqdn\_redis](#output\_fqdn\_redis) | FQDN for the Redis cluster |
 | <a name="output_health"></a> [health](#output\_health) | Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH\_UNKNOWN |
+| <a name="output_password"></a> [password](#output\_password) | The password of the host |
 | <a name="output_shard_name"></a> [shard\_name](#output\_shard\_name) | The name of the shard to which the host belongs |
 | <a name="output_status"></a> [status](#output\_status) | Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS\_UNKNOWN |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
