@@ -1,19 +1,21 @@
-locals {
-  zone      = "ru-central1-a"
-  folder_id = "folder_id"
+data "yandex_client_config" "client" {}
 
-  network_name = "default"
-  subnet_name  = "default-ru-central1-a"
-}
+module "network" {
+  source = "git::https://github.com/terraform-yacloud-modules/terraform-yandex-vpc.git?ref=v1.0.0"
 
-data "yandex_vpc_network" "private" {
-  folder_id = local.folder_id
-  name      = local.network_name
-}
+  folder_id = data.yandex_client_config.client.folder_id
 
-data "yandex_vpc_subnet" "private" {
-  folder_id = local.folder_id
-  name      = local.subnet_name
+  blank_name = "vpc-nat-gateway"
+  labels = {
+    repo = "terraform-yacloud-modules/terraform-yandex-vpc"
+  }
+
+  azs = ["ru-central1-a", "ru-central1-b", "ru-central1-d"]
+
+  private_subnets = [["10.4.0.0/24"], ["10.5.0.0/24"], ["10.6.0.0/24"]]
+
+  create_vpc         = true
+  create_nat_gateway = true
 }
 
 module "redis_simple" {
@@ -21,8 +23,8 @@ module "redis_simple" {
 
   name        = "cache"
   description = "Cache in-memory without sync to disk"
-  folder_id   = local.folder_id
-  network_id  = data.yandex_vpc_network.private.id
+  folder_id   = data.yandex_client_config.client.folder_id
+  network_id  = module.network.vpc_id
 
   persistence_mode = "OFF"
   password         = "secretpassword"
@@ -31,10 +33,10 @@ module "redis_simple" {
 
   hosts = {
     host1 = {
-      zone      = local.zone
-      subnet_id = data.yandex_vpc_subnet.private.id
+      zone      = "ru-central1-a"
+      subnet_id = module.network.private_subnets_ids[0]
     }
   }
 
-  zone = local.zone
+  zone = "ru-central1-a"
 }
