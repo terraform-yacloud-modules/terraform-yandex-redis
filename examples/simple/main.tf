@@ -39,4 +39,9 @@ module "redis_simple" {
   }
 
   zone = "ru-central1-a"
+
+  type = "WEEKLY"
+  hour = "03"
+  day  = "MON"
+
 }
