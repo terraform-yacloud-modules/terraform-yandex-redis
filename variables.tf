@@ -132,7 +132,7 @@ variable "databases" {
 variable "redis_version" {
   description = "Version of Redis"
   type        = string
-  default     = "6.2"
+  default     = "7.2"
 }
 
 variable "client_output_buffer_limit_normal" {
@@ -173,10 +173,11 @@ variable "disk_type_id" {
 variable "zone" {
   description = "The availability zone where the Redis host will be created. See https://cloud.yandex.com/en/docs/overview/concepts/geo-scope"
   type        = string
+  default     = "ru-central1-a"
 
   validation {
-    condition     = contains(["ru-central1-a", "ru-central1-b", "ru-central1-c", "ru-central1-d"], var.zone)
-    error_message = "Zone must be one of `ru-central1-a`, `ru-central1-b`, `ru-central1-c` or `ru-central1-d` (with limitations)."
+    condition     = contains(["ru-central1-a", "ru-central1-b", "ru-central1-d"], var.zone)
+    error_message = "Zone must be one of `ru-central1-a`, `ru-central1-b` or `ru-central1-d` (with limitations)."
   }
 }
 
