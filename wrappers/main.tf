@@ -1,0 +1,38 @@
+module "wrapper" {
+  source = "../"
+
+  for_each = var.items
+
+  name                              = try(each.value.name, var.defaults.name)
+  network_id                        = try(each.value.network_id, var.defaults.network_id)
+  environment                       = try(each.value.environment, var.defaults.environment, "PRODUCTION")
+  description                       = try(each.value.description, var.defaults.description, "Redis cluster")
+  folder_id                         = try(each.value.folder_id, var.defaults.folder_id, null)
+  labels                            = try(each.value.labels, var.defaults.labels, {})
+  sharded                           = try(each.value.sharded, var.defaults.sharded, false)
+  tls_enabled                       = try(each.value.tls_enabled, var.defaults.tls_enabled, false)
+  persistence_mode                  = try(each.value.persistence_mode, var.defaults.persistence_mode, "ON")
+  security_group_ids                = try(each.value.security_group_ids, var.defaults.security_group_ids, [])
+  deletion_protection               = try(each.value.deletion_protection, var.defaults.deletion_protection, false)
+  password                          = try(each.value.password, var.defaults.password)
+  timeout                           = try(each.value.timeout, var.defaults.timeout, 0)
+  maxmemory_policy                  = try(each.value.maxmemory_policy, var.defaults.maxmemory_policy, "NOEVICTION")
+  notify_keyspace_events            = try(each.value.notify_keyspace_events, var.defaults.notify_keyspace_events, "")
+  slowlog_log_slower_than           = try(each.value.slowlog_log_slower_than, var.defaults.slowlog_log_slower_than, 10000)
+  slowlog_max_len                   = try(each.value.slowlog_max_len, var.defaults.slowlog_max_len, 1000)
+  databases                         = try(each.value.databases, var.defaults.databases, 16)
+  redis_version                     = try(each.value.redis_version, var.defaults.redis_version, "7.2")
+  client_output_buffer_limit_normal = try(each.value.client_output_buffer_limit_normal, var.defaults.client_output_buffer_limit_normal, "1073741824 536870912 60")
+  client_output_buffer_limit_pubsub = try(each.value.client_output_buffer_limit_pubsub, var.defaults.client_output_buffer_limit_pubsub, "1073741824 536870912 60")
+  resource_preset_id                = try(each.value.resource_preset_id, var.defaults.resource_preset_id, "b3-c1-m4")
+  disk_size                         = try(each.value.disk_size, var.defaults.disk_size, 20)
+  disk_type_id                      = try(each.value.disk_type_id, var.defaults.disk_type_id, "network-ssd")
+  zone                              = try(each.value.zone, var.defaults.zone, "ru-central1-a")
+  subnet_id                         = try(each.value.subnet_id, var.defaults.subnet_id, null)
+  replica_priority                  = try(each.value.replica_priority, var.defaults.replica_priority, null)
+  assign_public_ip                  = try(each.value.assign_public_ip, var.defaults.assign_public_ip, false)
+  type                              = try(each.value.type, var.defaults.type, "ANYTIME")
+  hour                              = try(each.value.hour, var.defaults.hour, 24)
+  day                               = try(each.value.day, var.defaults.day, "MON")
+  hosts                             = try(each.value.hosts, var.defaults.hosts)
+}
