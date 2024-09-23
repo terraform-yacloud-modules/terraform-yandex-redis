@@ -75,7 +75,7 @@ variable "deletion_protection" {
 variable "password" {
   description = "Password for the Redis cluster"
   type        = string
-  sensitive   = true
+  sensitive   = false
 }
 
 variable "timeout" {
