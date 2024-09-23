@@ -66,7 +66,7 @@ output "deletion_protection" {
 output "config" {
   description = "Configuration of the Redis cluster"
   value       = yandex_mdb_redis_cluster.this.config
-  sensitive   = true
+  sensitive   = false
 }
 
 output "resources" {
