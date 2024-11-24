@@ -132,7 +132,7 @@ variable "databases" {
 variable "redis_version" {
   description = "Version of Redis"
   type        = string
-  default     = "6.2"
+  default     = "7.2"
 }
 
 variable "client_output_buffer_limit_normal" {
