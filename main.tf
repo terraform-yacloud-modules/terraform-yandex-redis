@@ -35,9 +35,13 @@ resource "yandex_mdb_redis_cluster" "this" {
   dynamic "host" {
     for_each = var.hosts
     content {
-      zone      = host.value
-      subnet_id = host.value
+      zone      = host.value.zone
+      subnet_id = host.value.subnet_id
 
+      precondition {
+        condition     = contains(["ru-central1-a", "ru-central1-b", "ru-central1-c", "ru-central1-d"], host.value.zone)
+        error_message = "Zone must be one of `ru-central1-a`, `ru-central1-b`, `ru-central1-c`, or `ru-central1-d`."
+      }
       shard_name = var.sharded ? lookup(host.value, "shard_name", "shard-${host.key}") : null
 
       replica_priority = var.sharded ? null : var.replica_priority
