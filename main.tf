@@ -32,19 +32,6 @@ resource "yandex_mdb_redis_cluster" "this" {
     disk_type_id       = var.disk_type_id
   }
 
-  lifecycle {
-    precondition {
-      condition = length([
-        for host in var.hosts : host.zone
-        if !contains(["ru-central1-a", "ru-central1-b", "ru-central1-c", "ru-central1-d"], host.zone)
-      ]) == 0
-      error_message = join(", ", [
-        for host in var.hosts : "Host ${host.key} has invalid zone '${host.zone}'"
-        if !contains(["ru-central1-a", "ru-central1-b", "ru-central1-c", "ru-central1-d"], host.zone)
-      ])
-    }
-  }
-
   dynamic "host" {
     for_each = var.hosts
     content {
