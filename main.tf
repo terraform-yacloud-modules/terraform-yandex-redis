@@ -35,8 +35,8 @@ resource "yandex_mdb_redis_cluster" "this" {
   dynamic "host" {
     for_each = var.hosts
     content {
-      zone      = lookup(host.value, "zone", var.zone)
-      subnet_id = lookup(host.value, "subnet_id", var.subnet_id)
+      zone      = host.value
+      subnet_id = host.value
 
       shard_name = var.sharded ? lookup(host.value, "shard_name", "shard-${host.key}") : null
 
