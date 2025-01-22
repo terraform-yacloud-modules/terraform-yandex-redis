@@ -173,7 +173,7 @@ variable "disk_type_id" {
 variable "zone" {
   description = "The availability zone where the Redis host will be created. See https://cloud.yandex.com/en/docs/overview/concepts/geo-scope"
   type        = string
-  default     = "ru-central1-a"
+  default     = "ru-central1-b"
 
   validation {
     condition     = contains(["ru-central1-a", "ru-central1-b", "ru-central1-d"], var.zone)
