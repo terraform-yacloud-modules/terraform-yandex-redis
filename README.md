@@ -134,18 +134,16 @@ No modules.
 | <a name="input_notify_keyspace_events"></a> [notify\_keyspace\_events](#input\_notify\_keyspace\_events) | Select the events that Redis will notify among a set of classes | `string` | `""` | no |
 | <a name="input_password"></a> [password](#input\_password) | Password for the Redis cluster | `string` | n/a | yes |
 | <a name="input_persistence_mode"></a> [persistence\_mode](#input\_persistence\_mode) | Persistence mode. Must be one of OFF or ON | `string` | `"ON"` | no |
-| <a name="input_redis_version"></a> [redis\_version](#input\_redis\_version) | Version of Redis | `string` | `"6.2"` | no |
+| <a name="input_redis_version"></a> [redis\_version](#input\_redis\_version) | Version of the Redis server | `string` | `"7.2-valkey"` | no |
 | <a name="input_replica_priority"></a> [replica\_priority](#input\_replica\_priority) | Replica priority of a current replica (usable for non-sharded only) | `any` | `null` | no |
 | <a name="input_resource_preset_id"></a> [resource\_preset\_id](#input\_resource\_preset\_id) | The ID of the preset for computational resources available to a host (CPU, memory etc.). See https://cloud.yandex.com/en/docs/managed-redis/concepts/instance-types | `string` | `"b3-c1-m4"` | no |
 | <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | A set of ids of security groups assigned to hosts of the cluster | `list(string)` | `[]` | no |
 | <a name="input_sharded"></a> [sharded](#input\_sharded) | Redis Cluster mode enabled/disabled | `bool` | `false` | no |
 | <a name="input_slowlog_log_slower_than"></a> [slowlog\_log\_slower\_than](#input\_slowlog\_log\_slower\_than) | Log slow queries below this number in microseconds | `number` | `10000` | no |
 | <a name="input_slowlog_max_len"></a> [slowlog\_max\_len](#input\_slowlog\_max\_len) | Slow queries log length | `number` | `1000` | no |
-| <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs | `string` | `null` | no |
 | <a name="input_timeout"></a> [timeout](#input\_timeout) | Close the connection after a client is idle for N seconds | `number` | `0` | no |
 | <a name="input_tls_enabled"></a> [tls\_enabled](#input\_tls\_enabled) | TLS support mode enabled/disabled | `bool` | `false` | no |
 | <a name="input_type"></a> [type](#input\_type) | Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window | `string` | `"ANYTIME"` | no |
-| <a name="input_zone"></a> [zone](#input\_zone) | The availability zone where the Redis host will be created. See https://cloud.yandex.com/en/docs/overview/concepts/geo-scope | `string` | n/a | yes |
 
 ## Outputs
 
