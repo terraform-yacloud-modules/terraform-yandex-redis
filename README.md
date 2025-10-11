@@ -86,7 +86,7 @@ maintainers to test your changes and to keep the examples up to date for users. 
 - [Sharded Redis cluster](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/tree/main/examples/sharded)
 
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -168,7 +168,7 @@ No modules.
 | <a name="output_security_group_ids"></a> [security\_group\_ids](#output\_security\_group\_ids) | A set of ids of security groups assigned to hosts of the cluster |
 | <a name="output_sharded"></a> [sharded](#output\_sharded) | Redis Cluster mode enabled/disabled |
 | <a name="output_tls_enabled"></a> [tls\_enabled](#output\_tls\_enabled) | TLS support mode enabled/disabled |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->
 
 ## License
 

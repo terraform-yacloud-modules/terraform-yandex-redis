@@ -47,5 +47,4 @@ module "redis_sharded" {
     }
   }
 
-  zone = "ru-central1-a"
 }
