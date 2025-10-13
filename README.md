@@ -151,7 +151,7 @@ No modules.
 | <a name="input_timeout"></a> [timeout](#input\_timeout) | Close the connection after a client is idle for N seconds | `number` | `0` | no |
 | <a name="input_tls_enabled"></a> [tls\_enabled](#input\_tls\_enabled) | TLS support mode enabled/disabled | `bool` | `false` | no |
 | <a name="input_type"></a> [type](#input\_type) | Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window | `string` | `"ANYTIME"` | no |
-| <a name="input_use_luajit"></a> [use\_luajit](#input\_use\_luajit) | Enable LuaJIT engine | `bool` | `true` | no |
+| <a name="input_use_luajit"></a> [use\_luajit](#input\_use\_luajit) | Enable LuaJIT engine | `bool` | `false` | no |
 
 ## Outputs
 
@@ -248,7 +248,7 @@ No modules.
 | <a name="input_timeout"></a> [timeout](#input\_timeout) | Close the connection after a client is idle for N seconds | `number` | `0` | no |
 | <a name="input_tls_enabled"></a> [tls\_enabled](#input\_tls\_enabled) | TLS support mode enabled/disabled | `bool` | `false` | no |
 | <a name="input_type"></a> [type](#input\_type) | Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window | `string` | `"ANYTIME"` | no |
-| <a name="input_use_luajit"></a> [use\_luajit](#input\_use\_luajit) | Enable LuaJIT engine | `bool` | `true` | no |
+| <a name="input_use_luajit"></a> [use\_luajit](#input\_use\_luajit) | Enable LuaJIT engine | `bool` | `false` | no |
 
 ## Outputs
 
