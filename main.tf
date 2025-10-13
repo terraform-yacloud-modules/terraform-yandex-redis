@@ -6,10 +6,13 @@ resource "yandex_mdb_redis_cluster" "this" {
   network_id  = var.network_id
   folder_id   = var.folder_id
 
-  persistence_mode    = var.persistence_mode
-  deletion_protection = var.deletion_protection
-  sharded             = var.sharded
-  tls_enabled         = var.tls_enabled
+  persistence_mode       = var.persistence_mode
+  deletion_protection    = var.deletion_protection
+  sharded                = var.sharded
+  tls_enabled            = var.tls_enabled
+  announce_hostnames     = var.announce_hostnames
+  auth_sentinel          = var.auth_sentinel
+  disk_encryption_key_id = var.disk_encryption_key_id
 
   config {
     password = var.password
@@ -24,6 +27,17 @@ resource "yandex_mdb_redis_cluster" "this" {
     slowlog_max_len                   = var.slowlog_max_len
     client_output_buffer_limit_normal = var.client_output_buffer_limit_normal
     client_output_buffer_limit_pubsub = var.client_output_buffer_limit_pubsub
+
+    use_luajit         = var.use_luajit
+    io_threads_allowed = var.io_threads_allowed
+
+    dynamic "backup_window_start" {
+      for_each = var.backup_window_start != null ? [var.backup_window_start] : []
+      content {
+        hours   = backup_window_start.value.hours
+        minutes = lookup(backup_window_start.value, "minutes", null)
+      }
+    }
   }
 
   resources {
@@ -48,6 +62,23 @@ resource "yandex_mdb_redis_cluster" "this" {
   security_group_ids = var.security_group_ids
 
   labels = var.labels
+
+  dynamic "access" {
+    for_each = var.access != null ? [var.access] : []
+    content {
+      data_lens = lookup(access.value, "data_lens", null)
+      web_sql   = lookup(access.value, "web_sql", null)
+    }
+  }
+
+  dynamic "disk_size_autoscaling" {
+    for_each = var.disk_size_autoscaling != null ? [var.disk_size_autoscaling] : []
+    content {
+      disk_size_limit           = disk_size_autoscaling.value.disk_size_limit
+      planned_usage_threshold   = lookup(disk_size_autoscaling.value, "planned_usage_threshold", null)
+      emergency_usage_threshold = lookup(disk_size_autoscaling.value, "emergency_usage_threshold", null)
+    }
+  }
 
   maintenance_window {
     type = var.type

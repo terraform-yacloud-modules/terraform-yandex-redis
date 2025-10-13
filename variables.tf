@@ -169,8 +169,8 @@ variable "disk_type_id" {
   default     = "network-ssd"
 
   validation {
-    condition     = contains(["network-ssd", "local-ssd", "network-ssd-nonreplicated"], var.disk_type_id)
-    error_message = "Disk_type_id be one of `network-ssd`, `local-ssd`, `network-ssd-nonreplicated`."
+    condition     = contains(["network-ssd", "local-ssd", "network-ssd-nonreplicated", "network-ssd-io-m3"], var.disk_type_id)
+    error_message = "Disk_type_id be one of `network-ssd`, `local-ssd`, `network-ssd-nonreplicated` or `network-ssd-io-m3`."
   }
 }
 
@@ -222,4 +222,62 @@ variable "hosts" {
     condition     = length(keys(var.hosts)) > 0
     error_message = "At least one host should be defined"
   }
+}
+
+variable "use_luajit" {
+  description = "Enable LuaJIT engine"
+  type        = bool
+  default     = true
+}
+
+variable "io_threads_allowed" {
+  description = "Enable IO threads for Redis (improves performance for concurrent connections)"
+  type        = bool
+  default     = false
+}
+
+variable "backup_window_start" {
+  description = "Time to start the daily backup, in the UTC timezone. The structure is documented below"
+  type = object({
+    hours   = number
+    minutes = optional(number)
+  })
+  default = null
+}
+
+variable "announce_hostnames" {
+  description = "Enable FQDN instead of IP addresses in CLUSTER SLOTS command"
+  type        = bool
+  default     = false
+}
+
+variable "auth_sentinel" {
+  description = "Allow ACL based authentication in Redis Sentinel"
+  type        = bool
+  default     = false
+}
+
+variable "disk_encryption_key_id" {
+  description = "ID of the KMS key used for disk encryption"
+  type        = string
+  default     = null
+}
+
+variable "disk_size_autoscaling" {
+  description = "Disk size autoscaling configuration"
+  type = object({
+    disk_size_limit           = number
+    planned_usage_threshold   = optional(number)
+    emergency_usage_threshold = optional(number)
+  })
+  default = null
+}
+
+variable "access" {
+  description = "Access policy for DataLens and WebSQL"
+  type = object({
+    data_lens = optional(bool)
+    web_sql   = optional(bool)
+  })
+  default = null
 }
