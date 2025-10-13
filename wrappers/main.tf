@@ -33,7 +33,7 @@ module "wrapper" {
   hour                              = try(each.value.hour, var.defaults.hour, 0)
   day                               = try(each.value.day, var.defaults.day, "MON")
   hosts                             = try(each.value.hosts, var.defaults.hosts, [])
-  use_luajit                        = try(each.value.use_luajit, var.defaults.use_luajit, true)
+  use_luajit                        = try(each.value.use_luajit, var.defaults.use_luajit, false)
   io_threads_allowed                = try(each.value.io_threads_allowed, var.defaults.io_threads_allowed, false)
   backup_window_start               = try(each.value.backup_window_start, var.defaults.backup_window_start, null)
   announce_hostnames                = try(each.value.announce_hostnames, var.defaults.announce_hostnames, false)

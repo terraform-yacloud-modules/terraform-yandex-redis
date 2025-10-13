@@ -223,7 +223,7 @@ variable "hosts" {
 variable "use_luajit" {
   description = "Enable LuaJIT engine"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "io_threads_allowed" {
