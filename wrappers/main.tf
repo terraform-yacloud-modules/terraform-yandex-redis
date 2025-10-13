@@ -30,7 +30,7 @@ module "wrapper" {
   replica_priority                  = try(each.value.replica_priority, var.defaults.replica_priority, null)
   assign_public_ip                  = try(each.value.assign_public_ip, var.defaults.assign_public_ip, false)
   type                              = try(each.value.type, var.defaults.type, "ANYTIME")
-  hour                              = try(each.value.hour, var.defaults.hour, 24)
+  hour                              = try(each.value.hour, var.defaults.hour, 0)
   day                               = try(each.value.day, var.defaults.day, "MON")
   hosts                             = try(each.value.hosts, var.defaults.hosts, [])
   use_luajit                        = try(each.value.use_luajit, var.defaults.use_luajit, true)
