@@ -130,13 +130,9 @@ variable "databases" {
 }
 
 variable "redis_version" {
-  description = "Version of the Redis server"
+  description = "Version of Redis"
   type        = string
-  default     = "7.2-valkey"
-  validation {
-    condition     = contains(["7.2-valkey", "8.0-valkey", "8.1-valkey"], var.redis_version)
-    error_message = "The Redis server version must be 7.2-valkey, 8.0-valkey, 8.1-valkey"
-  }
+  default     = "7.2"
 }
 
 variable "client_output_buffer_limit_normal" {
@@ -170,7 +166,7 @@ variable "disk_type_id" {
 
   validation {
     condition     = contains(["network-ssd", "local-ssd", "network-ssd-nonreplicated", "network-ssd-io-m3"], var.disk_type_id)
-    error_message = "Disk_type_id must be one of `network-ssd`, `local-ssd`, `network-ssd-nonreplicated` or `network-ssd-io-m3`."
+    error_message = "Disk_type_id be one of `network-ssd`, `local-ssd`, `network-ssd-nonreplicated` or `network-ssd-io-m3`."
   }
 }
 
