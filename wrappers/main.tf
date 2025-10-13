@@ -14,7 +14,7 @@ module "wrapper" {
   persistence_mode                  = try(each.value.persistence_mode, var.defaults.persistence_mode, "ON")
   security_group_ids                = try(each.value.security_group_ids, var.defaults.security_group_ids, [])
   deletion_protection               = try(each.value.deletion_protection, var.defaults.deletion_protection, false)
-  password                          = try(each.value.password, var.defaults.password, "ChangeMe123!")
+  password                          = try(each.value.password, var.defaults.password)
   timeout                           = try(each.value.timeout, var.defaults.timeout, 0)
   maxmemory_policy                  = try(each.value.maxmemory_policy, var.defaults.maxmemory_policy, "NOEVICTION")
   notify_keyspace_events            = try(each.value.notify_keyspace_events, var.defaults.notify_keyspace_events, "")
