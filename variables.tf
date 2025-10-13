@@ -170,7 +170,7 @@ variable "disk_type_id" {
 
   validation {
     condition     = contains(["network-ssd", "local-ssd", "network-ssd-nonreplicated", "network-ssd-io-m3"], var.disk_type_id)
-    error_message = "Disk_type_id be one of `network-ssd`, `local-ssd`, `network-ssd-nonreplicated` or `network-ssd-io-m3`."
+    error_message = "Disk_type_id must be one of `network-ssd`, `local-ssd`, `network-ssd-nonreplicated` or `network-ssd-io-m3`."
   }
 }
 
