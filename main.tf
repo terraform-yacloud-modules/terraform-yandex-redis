@@ -35,7 +35,7 @@ resource "yandex_mdb_redis_cluster" "this" {
       for_each = var.backup_window_start != null ? [var.backup_window_start] : []
       content {
         hours   = backup_window_start.value.hours
-        minutes = lookup(backup_window_start.value, "minutes", null)
+        minutes = backup_window_start.value.minutes
       }
     }
   }
@@ -66,8 +66,8 @@ resource "yandex_mdb_redis_cluster" "this" {
   dynamic "access" {
     for_each = var.access != null ? [var.access] : []
     content {
-      data_lens = lookup(access.value, "data_lens", null)
-      web_sql   = lookup(access.value, "web_sql", null)
+      data_lens = backup_window_start.value.data_lens
+      web_sql   = backup_window_start.value.web_sql
     }
   }
 
@@ -75,8 +75,8 @@ resource "yandex_mdb_redis_cluster" "this" {
     for_each = var.disk_size_autoscaling != null ? [var.disk_size_autoscaling] : []
     content {
       disk_size_limit           = disk_size_autoscaling.value.disk_size_limit
-      planned_usage_threshold   = lookup(disk_size_autoscaling.value, "planned_usage_threshold", null)
-      emergency_usage_threshold = lookup(disk_size_autoscaling.value, "emergency_usage_threshold", null)
+      planned_usage_threshold   = disk_size_autoscaling.value.planned_usage_threshold
+      emergency_usage_threshold = disk_size_autoscaling.value.emergency_usage_threshold
     }
   }
 
