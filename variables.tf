@@ -174,6 +174,23 @@ variable "disk_type_id" {
   }
 }
 
+variable "zone" {
+  description = "The availability zone where the Redis host will be created. See https://cloud.yandex.com/en/docs/overview/concepts/geo-scope"
+  type        = string
+  default     = "ru-central1-b"
+
+  validation {
+    condition     = contains(["ru-central1-a", "ru-central1-b", "ru-central1-d"], var.zone)
+    error_message = "Zone must be one of `ru-central1-a`, `ru-central1-b` or `ru-central1-d` (with limitations)."
+  }
+}
+
+variable "subnet_id" {
+  description = "The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs"
+  type        = string
+  default     = null
+}
+
 variable "replica_priority" {
   description = "Replica priority of a current replica (usable for non-sharded only)"
   type        = any
