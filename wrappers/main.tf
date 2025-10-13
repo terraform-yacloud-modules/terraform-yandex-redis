@@ -34,5 +34,5 @@ module "wrapper" {
   type                              = try(each.value.type, var.defaults.type, "ANYTIME")
   hour                              = try(each.value.hour, var.defaults.hour, 24)
   day                               = try(each.value.day, var.defaults.day, "MON")
-  hosts                             = try(each.value.hosts, var.defaults.hosts)
+  hosts                             = try(each.value.hosts, var.defaults.hosts, [])
 }
