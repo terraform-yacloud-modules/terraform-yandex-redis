@@ -101,9 +101,9 @@ resource "yandex_mdb_redis_cluster" "this" {
   dynamic "timeouts" {
     for_each = var.timeouts != null ? [var.timeouts] : []
     content {
-      create = lookup(timeouts.value, "create", null)
-      update = lookup(timeouts.value, "update", null)
-      delete = lookup(timeouts.value, "delete", null)
+      create = timeouts.value.create
+      update = timeouts.value.update
+      delete = timeouts.value.delete
     }
   }
 }
