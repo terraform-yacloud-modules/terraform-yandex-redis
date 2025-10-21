@@ -149,7 +149,7 @@ No modules.
 | <a name="input_notify_keyspace_events"></a> [notify\_keyspace\_events](#input\_notify\_keyspace\_events) | Select the events that Redis will notify among a set of classes | `string` | `""` | no |
 | <a name="input_password"></a> [password](#input\_password) | Password for the Redis cluster | `string` | n/a | yes |
 | <a name="input_persistence_mode"></a> [persistence\_mode](#input\_persistence\_mode) | Persistence mode. Must be one of OFF or ON | `string` | `"ON"` | no |
-| <a name="input_redis_version"></a> [redis\_version](#input\_redis\_version) | Version of Redis | `string` | `"7.2"` | no |
+| <a name="input_redis_version"></a> [redis\_version](#input\_redis\_version) | Version of Redis | `string` | `"7.2-valkey"` | no |
 | <a name="input_repl_backlog_size_percent"></a> [repl\_backlog\_size\_percent](#input\_repl\_backlog\_size\_percent) | Replication backlog size as a percentage of flavor maxmemory | `number` | `25` | no |
 | <a name="input_replica_priority"></a> [replica\_priority](#input\_replica\_priority) | Replica priority of a current replica (usable for non-sharded only) | `any` | `null` | no |
 | <a name="input_resource_preset_id"></a> [resource\_preset\_id](#input\_resource\_preset\_id) | The ID of the preset for computational resources available to a host (CPU, memory etc.). See https://cloud.yandex.com/en/docs/managed-redis/concepts/instance-types | `string` | `"b3-c1-m4"` | no |
