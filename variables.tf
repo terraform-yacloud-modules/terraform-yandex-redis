@@ -275,7 +275,7 @@ variable "lfu_decay_time" {
 }
 
 variable "lfu_log_factor" {
-  description = "LFU log factor"
+  description = "LFU logarithmic counter increment factor - higher values mean less frequent counter increments, affecting eviction sensitivity (range: 0-255)"
   type        = number
   default     = 10
 }
