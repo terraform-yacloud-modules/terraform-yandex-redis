@@ -269,7 +269,7 @@ variable "cluster_allow_pubsubshard_when_down" {
 }
 
 variable "lfu_decay_time" {
-  description = "LFU decay time"
+  description = "LFU (Least Frequently Used) decay time in minutes - controls how quickly access frequency counters are reduced"
   type        = number
   default     = 1
 }
