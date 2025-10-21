@@ -132,7 +132,7 @@ variable "databases" {
 variable "redis_version" {
   description = "Version of Redis"
   type        = string
-  default     = "7.2"
+  default     = "7.2-valkey"
 }
 
 variable "client_output_buffer_limit_normal" {
@@ -230,6 +230,82 @@ variable "io_threads_allowed" {
   description = "Enable IO threads for Redis (improves performance for concurrent connections)"
   type        = bool
   default     = false
+}
+
+variable "maxmemory_percent" {
+  description = "Redis maxmemory usage in percent"
+  type        = number
+  default     = 75
+}
+
+variable "lua_time_limit" {
+  description = "Maximum time in milliseconds for Lua scripts"
+  type        = number
+  default     = 5000
+}
+
+variable "repl_backlog_size_percent" {
+  description = "Replication backlog size as a percentage of flavor maxmemory"
+  type        = number
+  default     = 25
+}
+
+variable "cluster_require_full_coverage" {
+  description = "Controls whether all hash slots must be covered by nodes"
+  type        = bool
+  default     = true
+}
+
+variable "cluster_allow_reads_when_down" {
+  description = "Allows read operations when cluster is down"
+  type        = bool
+  default     = false
+}
+
+variable "cluster_allow_pubsubshard_when_down" {
+  description = "Permits Pub/Sub shard operations when cluster is down"
+  type        = bool
+  default     = false
+}
+
+variable "lfu_decay_time" {
+  description = "LFU (Least Frequently Used) decay time in minutes - controls how quickly access frequency counters are reduced"
+  type        = number
+  default     = 1
+}
+
+variable "lfu_log_factor" {
+  description = "LFU logarithmic counter increment factor - higher values mean less frequent counter increments, affecting eviction sensitivity (range: 0-255)"
+  type        = number
+  default     = 10
+}
+
+variable "turn_before_switchover" {
+  description = "Allows to turn before switchover in RDSync"
+  type        = bool
+  default     = false
+}
+
+variable "allow_data_loss" {
+  description = "Allows some data to be lost for faster switchover/restart"
+  type        = bool
+  default     = false
+}
+
+variable "zset_max_listpack_entries" {
+  description = "Controls max number of entries in zset before conversion"
+  type        = number
+  default     = 128
+}
+
+variable "timeouts" {
+  description = "Timeout configuration for create, update, and delete operations"
+  type = object({
+    create = optional(string)
+    update = optional(string)
+    delete = optional(string)
+  })
+  default = null
 }
 
 variable "backup_window_start" {

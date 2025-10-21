@@ -28,8 +28,19 @@ resource "yandex_mdb_redis_cluster" "this" {
     client_output_buffer_limit_normal = var.client_output_buffer_limit_normal
     client_output_buffer_limit_pubsub = var.client_output_buffer_limit_pubsub
 
-    use_luajit         = var.use_luajit
-    io_threads_allowed = var.io_threads_allowed
+    maxmemory_percent                   = var.maxmemory_percent
+    lua_time_limit                      = var.lua_time_limit
+    repl_backlog_size_percent           = var.repl_backlog_size_percent
+    cluster_require_full_coverage       = var.cluster_require_full_coverage
+    cluster_allow_reads_when_down       = var.cluster_allow_reads_when_down
+    cluster_allow_pubsubshard_when_down = var.cluster_allow_pubsubshard_when_down
+    lfu_decay_time                      = var.lfu_decay_time
+    lfu_log_factor                      = var.lfu_log_factor
+    turn_before_switchover              = var.turn_before_switchover
+    allow_data_loss                     = var.allow_data_loss
+    use_luajit                          = var.use_luajit
+    io_threads_allowed                  = var.io_threads_allowed
+    zset_max_listpack_entries           = var.zset_max_listpack_entries
 
     dynamic "backup_window_start" {
       for_each = var.backup_window_start != null ? [var.backup_window_start] : []
@@ -85,5 +96,14 @@ resource "yandex_mdb_redis_cluster" "this" {
 
     hour = var.type == "ANYTIME" ? null : var.hour
     day  = var.type == "ANYTIME" ? null : var.day
+  }
+
+  dynamic "timeouts" {
+    for_each = var.timeouts != null ? [var.timeouts] : []
+    content {
+      create = timeouts.value.create
+      update = timeouts.value.update
+      delete = timeouts.value.delete
+    }
   }
 }

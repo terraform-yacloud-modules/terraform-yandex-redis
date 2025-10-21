@@ -42,4 +42,11 @@ module "redis_simple" {
   hour = "03"
   day  = "MON"
 
+  # Configure timeouts for create, update and delete operations
+  timeouts = {
+    create = "30m"
+    update = "20m"
+    delete = "15m"
+  }
+
 }
