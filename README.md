@@ -115,12 +115,16 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_access"></a> [access](#input\_access) | Access policy for DataLens and WebSQL | <pre>object({<br/>    data_lens = optional(bool)<br/>    web_sql   = optional(bool)<br/>  })</pre> | `null` | no |
+| <a name="input_allow_data_loss"></a> [allow\_data\_loss](#input\_allow\_data\_loss) | Allows some data to be lost for faster switchover/restart | `bool` | `false` | no |
 | <a name="input_announce_hostnames"></a> [announce\_hostnames](#input\_announce\_hostnames) | Enable FQDN instead of IP addresses in CLUSTER SLOTS command | `bool` | `false` | no |
 | <a name="input_assign_public_ip"></a> [assign\_public\_ip](#input\_assign\_public\_ip) | Sets whether the host should get a public IP address or not | `bool` | `false` | no |
 | <a name="input_auth_sentinel"></a> [auth\_sentinel](#input\_auth\_sentinel) | Allow ACL based authentication in Redis Sentinel | `bool` | `false` | no |
 | <a name="input_backup_window_start"></a> [backup\_window\_start](#input\_backup\_window\_start) | Time to start the daily backup, in the UTC timezone. The structure is documented below | <pre>object({<br/>    hours   = number<br/>    minutes = optional(number)<br/>  })</pre> | `null` | no |
 | <a name="input_client_output_buffer_limit_normal"></a> [client\_output\_buffer\_limit\_normal](#input\_client\_output\_buffer\_limit\_normal) | Normal clients output buffer limits (bytes) | `string` | `"1073741824 536870912 60"` | no |
 | <a name="input_client_output_buffer_limit_pubsub"></a> [client\_output\_buffer\_limit\_pubsub](#input\_client\_output\_buffer\_limit\_pubsub) | Pubsub clients output buffer limits (bytes) | `string` | `"1073741824 536870912 60"` | no |
+| <a name="input_cluster_allow_pubsubshard_when_down"></a> [cluster\_allow\_pubsubshard\_when\_down](#input\_cluster\_allow\_pubsubshard\_when\_down) | Permits Pub/Sub shard operations when cluster is down | `bool` | `false` | no |
+| <a name="input_cluster_allow_reads_when_down"></a> [cluster\_allow\_reads\_when\_down](#input\_cluster\_allow\_reads\_when\_down) | Allows read operations when cluster is down | `bool` | `false` | no |
+| <a name="input_cluster_require_full_coverage"></a> [cluster\_require\_full\_coverage](#input\_cluster\_require\_full\_coverage) | Controls whether all hash slots must be covered by nodes | `bool` | `true` | no |
 | <a name="input_databases"></a> [databases](#input\_databases) | Number of databases (changing requires redis-server restart) | `number` | `16` | no |
 | <a name="input_day"></a> [day](#input\_day) | Day of week for maintenance window if window type is weekly | `string` | `"MON"` | no |
 | <a name="input_deletion_protection"></a> [deletion\_protection](#input\_deletion\_protection) | Inhibits deletion of the cluster | `bool` | `false` | no |
@@ -135,6 +139,10 @@ No modules.
 | <a name="input_hour"></a> [hour](#input\_hour) | Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly | `number` | `24` | no |
 | <a name="input_io_threads_allowed"></a> [io\_threads\_allowed](#input\_io\_threads\_allowed) | Enable IO threads for Redis (improves performance for concurrent connections) | `bool` | `false` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | A set of key/value label pairs to assign to the Redis cluster | `map(string)` | `{}` | no |
+| <a name="input_lfu_decay_time"></a> [lfu\_decay\_time](#input\_lfu\_decay\_time) | LFU decay time | `number` | `1` | no |
+| <a name="input_lfu_log_factor"></a> [lfu\_log\_factor](#input\_lfu\_log\_factor) | LFU log factor | `number` | `10` | no |
+| <a name="input_lua_time_limit"></a> [lua\_time\_limit](#input\_lua\_time\_limit) | Maximum time in milliseconds for Lua scripts | `number` | `5000` | no |
+| <a name="input_maxmemory_percent"></a> [maxmemory\_percent](#input\_maxmemory\_percent) | Redis maxmemory usage in percent | `number` | `75` | no |
 | <a name="input_maxmemory_policy"></a> [maxmemory\_policy](#input\_maxmemory\_policy) | Redis key eviction policy for a dataset that reaches maximum memory. See https://docs.redis.com/latest/rs/databases/memory-performance/eviction-policy/ | `string` | `"NOEVICTION"` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name of the Redis cluster | `string` | n/a | yes |
 | <a name="input_network_id"></a> [network\_id](#input\_network\_id) | ID of the network, to which the Redis cluster belongs | `string` | n/a | yes |
@@ -142,6 +150,7 @@ No modules.
 | <a name="input_password"></a> [password](#input\_password) | Password for the Redis cluster | `string` | n/a | yes |
 | <a name="input_persistence_mode"></a> [persistence\_mode](#input\_persistence\_mode) | Persistence mode. Must be one of OFF or ON | `string` | `"ON"` | no |
 | <a name="input_redis_version"></a> [redis\_version](#input\_redis\_version) | Version of Redis | `string` | `"7.2"` | no |
+| <a name="input_repl_backlog_size_percent"></a> [repl\_backlog\_size\_percent](#input\_repl\_backlog\_size\_percent) | Replication backlog size as a percentage of flavor maxmemory | `number` | `25` | no |
 | <a name="input_replica_priority"></a> [replica\_priority](#input\_replica\_priority) | Replica priority of a current replica (usable for non-sharded only) | `any` | `null` | no |
 | <a name="input_resource_preset_id"></a> [resource\_preset\_id](#input\_resource\_preset\_id) | The ID of the preset for computational resources available to a host (CPU, memory etc.). See https://cloud.yandex.com/en/docs/managed-redis/concepts/instance-types | `string` | `"b3-c1-m4"` | no |
 | <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | A set of ids of security groups assigned to hosts of the cluster | `list(string)` | `[]` | no |
@@ -149,9 +158,12 @@ No modules.
 | <a name="input_slowlog_log_slower_than"></a> [slowlog\_log\_slower\_than](#input\_slowlog\_log\_slower\_than) | Log slow queries below this number in microseconds | `number` | `10000` | no |
 | <a name="input_slowlog_max_len"></a> [slowlog\_max\_len](#input\_slowlog\_max\_len) | Slow queries log length | `number` | `1000` | no |
 | <a name="input_timeout"></a> [timeout](#input\_timeout) | Close the connection after a client is idle for N seconds | `number` | `0` | no |
+| <a name="input_timeouts"></a> [timeouts](#input\_timeouts) | Timeout configuration for create, update, and delete operations | <pre>object({<br/>    create = optional(string)<br/>    update = optional(string)<br/>    delete = optional(string)<br/>  })</pre> | `null` | no |
 | <a name="input_tls_enabled"></a> [tls\_enabled](#input\_tls\_enabled) | TLS support mode enabled/disabled | `bool` | `false` | no |
+| <a name="input_turn_before_switchover"></a> [turn\_before\_switchover](#input\_turn\_before\_switchover) | Allows to turn before switchover in RDSync | `bool` | `false` | no |
 | <a name="input_type"></a> [type](#input\_type) | Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window | `string` | `"ANYTIME"` | no |
 | <a name="input_use_luajit"></a> [use\_luajit](#input\_use\_luajit) | Enable LuaJIT engine | `bool` | `false` | no |
+| <a name="input_zset_max_listpack_entries"></a> [zset\_max\_listpack\_entries](#input\_zset\_max\_listpack\_entries) | Controls max number of entries in zset before conversion | `number` | `128` | no |
 
 ## Outputs
 
