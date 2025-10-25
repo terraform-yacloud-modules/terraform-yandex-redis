@@ -139,8 +139,8 @@ No modules.
 | <a name="input_hour"></a> [hour](#input\_hour) | Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly | `number` | `24` | no |
 | <a name="input_io_threads_allowed"></a> [io\_threads\_allowed](#input\_io\_threads\_allowed) | Enable IO threads for Redis (improves performance for concurrent connections) | `bool` | `false` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | A set of key/value label pairs to assign to the Redis cluster | `map(string)` | `{}` | no |
-| <a name="input_lfu_decay_time"></a> [lfu\_decay\_time](#input\_lfu\_decay\_time) | LFU decay time | `number` | `1` | no |
-| <a name="input_lfu_log_factor"></a> [lfu\_log\_factor](#input\_lfu\_log\_factor) | LFU log factor | `number` | `10` | no |
+| <a name="input_lfu_decay_time"></a> [lfu\_decay\_time](#input\_lfu\_decay\_time) | LFU (Least Frequently Used) decay time in minutes - controls how quickly access frequency counters are reduced | `number` | `1` | no |
+| <a name="input_lfu_log_factor"></a> [lfu\_log\_factor](#input\_lfu\_log\_factor) | LFU logarithmic counter increment factor - higher values mean less frequent counter increments, affecting eviction sensitivity (range: 0-255) | `number` | `10` | no |
 | <a name="input_lua_time_limit"></a> [lua\_time\_limit](#input\_lua\_time\_limit) | Maximum time in milliseconds for Lua scripts | `number` | `5000` | no |
 | <a name="input_maxmemory_percent"></a> [maxmemory\_percent](#input\_maxmemory\_percent) | Redis maxmemory usage in percent | `number` | `75` | no |
 | <a name="input_maxmemory_policy"></a> [maxmemory\_policy](#input\_maxmemory\_policy) | Redis key eviction policy for a dataset that reaches maximum memory. See https://docs.redis.com/latest/rs/databases/memory-performance/eviction-policy/ | `string` | `"NOEVICTION"` | no |
