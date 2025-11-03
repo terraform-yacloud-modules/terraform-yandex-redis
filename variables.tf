@@ -76,12 +76,22 @@ variable "password" {
   description = "Password for the Redis cluster"
   type        = string
   sensitive   = true
+
+  validation {
+    condition     = length(var.password) >= 8
+    error_message = "Password must be at least 8 characters long."
+  }
 }
 
 variable "timeout" {
   description = "Close the connection after a client is idle for N seconds"
   type        = number
   default     = 0
+
+  validation {
+    condition     = var.timeout >= 0
+    error_message = "Timeout must be a non-negative number."
+  }
 }
 
 variable "maxmemory_policy" {
@@ -127,6 +137,11 @@ variable "databases" {
   description = "Number of databases (changing requires redis-server restart)"
   type        = number
   default     = 16
+
+  validation {
+    condition     = var.databases > 0
+    error_message = "Number of databases must be greater than 0."
+  }
 }
 
 variable "redis_version" {
@@ -197,6 +212,11 @@ variable "hour" {
   description = "Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly"
   type        = number
   default     = 24
+
+  validation {
+    condition     = var.hour >= 1 && var.hour <= 24
+    error_message = "Hour must be between 1 and 24 inclusive."
+  }
 }
 
 variable "day" {
@@ -236,6 +256,11 @@ variable "maxmemory_percent" {
   description = "Redis maxmemory usage in percent"
   type        = number
   default     = 75
+
+  validation {
+    condition     = var.maxmemory_percent >= 0 && var.maxmemory_percent <= 100
+    error_message = "Maxmemory percent must be between 0 and 100 inclusive."
+  }
 }
 
 variable "lua_time_limit" {
@@ -248,6 +273,11 @@ variable "repl_backlog_size_percent" {
   description = "Replication backlog size as a percentage of flavor maxmemory"
   type        = number
   default     = 25
+
+  validation {
+    condition     = var.repl_backlog_size_percent >= 0 && var.repl_backlog_size_percent <= 100
+    error_message = "Replication backlog size percent must be between 0 and 100 inclusive."
+  }
 }
 
 variable "cluster_require_full_coverage" {
@@ -278,6 +308,11 @@ variable "lfu_log_factor" {
   description = "LFU logarithmic counter increment factor - higher values mean less frequent counter increments, affecting eviction sensitivity (range: 0-255)"
   type        = number
   default     = 10
+
+  validation {
+    condition     = var.lfu_log_factor >= 0 && var.lfu_log_factor <= 255
+    error_message = "LFU log factor must be between 0 and 255 inclusive."
+  }
 }
 
 variable "turn_before_switchover" {
@@ -315,6 +350,16 @@ variable "backup_window_start" {
     minutes = optional(number)
   })
   default = null
+
+  validation {
+    condition = var.backup_window_start == null ? true : (
+      var.backup_window_start.hours >= 0 && var.backup_window_start.hours <= 23 &&
+      (var.backup_window_start.minutes == null || (
+        var.backup_window_start.minutes >= 0 && var.backup_window_start.minutes <= 59
+      ))
+    )
+    error_message = "Backup window start hours must be between 0-23 and minutes must be between 0-59 if specified."
+  }
 }
 
 variable "announce_hostnames" {
