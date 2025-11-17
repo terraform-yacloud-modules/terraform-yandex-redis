@@ -107,3 +107,14 @@ resource "yandex_mdb_redis_cluster" "this" {
     }
   }
 }
+
+resource "yandex_mdb_redis_user" "this" {
+  cluster_id = yandex_mdb_redis_cluster.this.id
+  name       = var.user_name
+  passwords  = [var.user_password]
+  permissions = {
+    commands   = var.user_permissions_commands
+    categories = var.user_permissions_categories
+    patterns   = var.user_permissions_patterns != "*" ? var.user_permissions_patterns : "~*"
+  }
+}

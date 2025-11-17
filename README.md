@@ -109,6 +109,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [yandex_mdb_redis_cluster.this](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/mdb_redis_cluster) | resource |
+| [yandex_mdb_redis_user.this](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/mdb_redis_user) | resource |
 
 ## Inputs
 
@@ -163,6 +164,11 @@ No modules.
 | <a name="input_turn_before_switchover"></a> [turn\_before\_switchover](#input\_turn\_before\_switchover) | Allows to turn before switchover in RDSync | `bool` | `false` | no |
 | <a name="input_type"></a> [type](#input\_type) | Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window | `string` | `"ANYTIME"` | no |
 | <a name="input_use_luajit"></a> [use\_luajit](#input\_use\_luajit) | Enable LuaJIT engine | `bool` | `false` | no |
+| <a name="input_user_name"></a> [user\_name](#input\_user\_name) | Name of the Redis user | `string` | `null` | no |
+| <a name="input_user_password"></a> [user\_password](#input\_user\_password) | Password for the Redis user | `string` | `null` | no |
+| <a name="input_user_permissions_categories"></a> [user\_permissions\_categories](#input\_user\_permissions\_categories) | Redis command categories allowed for the user. Leave empty unless needed | `string` | `""` | no |
+| <a name="input_user_permissions_commands"></a> [user\_permissions\_commands](#input\_user\_permissions\_commands) | Redis commands allowed for the user (e.g. '+get +set') | `string` | `"+get +set"` | no |
+| <a name="input_user_permissions_patterns"></a> [user\_permissions\_patterns](#input\_user\_permissions\_patterns) | Key patterns allowed for the user. Must start with ~, %R~, %W~ or %RW~ (e.g. '~*' for all keys) | `string` | `"~*"` | no |
 | <a name="input_zset_max_listpack_entries"></a> [zset\_max\_listpack\_entries](#input\_zset\_max\_listpack\_entries) | Controls max number of entries in zset before conversion | `number` | `128` | no |
 
 ## Outputs

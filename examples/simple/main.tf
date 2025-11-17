@@ -49,4 +49,6 @@ module "redis_simple" {
     delete = "15m"
   }
 
+  user_name     = "redis-user"
+  user_password = "user-secret-password"
 }
