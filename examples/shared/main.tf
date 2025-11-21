@@ -47,4 +47,6 @@ module "redis_sharded" {
     }
   }
 
+  user_name     = "redis-user"
+  user_password = "user-secret-password"
 }

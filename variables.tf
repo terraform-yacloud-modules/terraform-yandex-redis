@@ -398,3 +398,34 @@ variable "access" {
   })
   default = null
 }
+
+variable "user_name" {
+  description = "Name of the Redis user"
+  type        = string
+  default     = null
+}
+
+variable "user_password" {
+  description = "Password for the Redis user"
+  type        = string
+  sensitive   = true
+  default     = null
+}
+
+variable "user_permissions_commands" {
+  description = "Redis commands allowed for the user (e.g. '+get +set')"
+  type        = string
+  default     = "+get +set"
+}
+
+variable "user_permissions_categories" {
+  description = "Redis command categories allowed for the user. Leave empty unless needed"
+  type        = string
+  default     = ""
+}
+
+variable "user_permissions_patterns" {
+  description = "Key patterns allowed for the user. Must start with ~, %R~, %W~ or %RW~ (e.g. '~*' for all keys)"
+  type        = string
+  default     = "~*"
+}
