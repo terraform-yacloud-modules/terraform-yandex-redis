@@ -66,7 +66,7 @@ resource "yandex_mdb_redis_cluster" "this" {
       shard_name = var.sharded ? lookup(host.value, "shard_name", "shard-${host.key}") : null
 
       replica_priority = var.sharded ? null : lookup(host.value, "replica_priority", var.replica_priority)
-      assign_public_ip = var.tls_enabled ? lookup(host.value, "assign_public_ip", var.assign_public_ip) : false
+      assign_public_ip = lookup(host.value, "assign_public_ip", var.assign_public_ip)
     }
   }
 
