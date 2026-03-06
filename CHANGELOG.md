@@ -1,3 +1,11 @@
+## v1.56.0 - 2026-03-06
+### Bug Fixes
+- 3e2ba8a fix(redis-user): add moved block for backward compatibility
+- 413f5ea fix(redis-user): add optional user creation to avoid provider error, add user password validation
+
+### Miscellaneous
+- 5fcd3cd Merge pull request [#69](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/69) from akulichmark/main
+
 ## v1.55.0 - 2026-03-02
 ### Miscellaneous
 - f23ef54 Merge pull request [#67](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/67) from terraform-yacloud-modules/dependabot/github_actions/hashicorp/setup-terraform-4
