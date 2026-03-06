@@ -108,7 +108,14 @@ resource "yandex_mdb_redis_cluster" "this" {
   }
 }
 
+moved {
+  from = yandex_mdb_redis_user.this
+  to   = yandex_mdb_redis_user.this[0]
+}
+
 resource "yandex_mdb_redis_user" "this" {
+  count = var.user_name != null && var.user_password != null ? 1 : 0
+
   cluster_id = yandex_mdb_redis_cluster.this.id
   name       = var.user_name
   passwords  = [var.user_password]
