@@ -406,13 +406,13 @@ variable "user_name" {
 }
 
 variable "user_password" {
-  description = "Password for the Redis user"
+  description = "Password for the Redis user. If not set with `user_name`, will be genereated randomly"
   type        = string
   sensitive   = true
   default     = null
 
   validation {
-    condition     = var.user_password == null || length(var.user_password) >= 8
+    condition     = var.user_password == null ? true : length(var.user_password) >= 8
     error_message = "Password must be at least 8 characters long when set."
   }
 }
