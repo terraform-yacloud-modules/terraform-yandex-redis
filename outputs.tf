@@ -96,6 +96,6 @@ output "created_at" {
 
 output "user_password" {
   description = "Password of the Redis user (generated if not provided)"
-  value       = try(coalesce(var.user_password, random_password.user[0].result), null)
+  value       = local.user_password
   sensitive   = true
 }

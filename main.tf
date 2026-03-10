@@ -114,11 +114,15 @@ moved {
 }
 
 resource "random_password" "user" {
-  count = var.user_name != null && var.user_password == null ? 1 : 0
+  count = var.user_name != null ? 1 : 0
 
   length           = 16
   special          = true
   override_special = "!#$%&*()-_=+[]{}<>:?"
+}
+
+locals {
+  user_password = var.user_password != null ? var.user_password : one(random_password.user[*].result)
 }
 
 resource "yandex_mdb_redis_user" "this" {
@@ -126,7 +130,7 @@ resource "yandex_mdb_redis_user" "this" {
 
   cluster_id = yandex_mdb_redis_cluster.this.id
   name       = var.user_name
-  passwords  = [coalesce(var.user_password, random_password.user[0].result)]
+  passwords  = [local.user_password]
   permissions = {
     commands   = var.user_permissions_commands
     categories = var.user_permissions_categories
