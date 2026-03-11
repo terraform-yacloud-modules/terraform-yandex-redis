@@ -1,3 +1,7 @@
+## v1.57.0 - 2026-03-11
+### Bug Fixes
+- de531cd fix(redis-user): fix password check and change condition on whether to create a user from password to user_name ([#72](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/72))
+
 ## v1.56.0 - 2026-03-06
 ### Bug Fixes
 - 3e2ba8a fix(redis-user): add moved block for backward compatibility
