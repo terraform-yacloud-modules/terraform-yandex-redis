@@ -93,3 +93,9 @@ output "created_at" {
   description = "Creation timestamp of the cluster"
   value       = yandex_mdb_redis_cluster.this.created_at
 }
+
+output "user_password" {
+  description = "Password of the Redis user (generated if not provided)"
+  value       = local.user_password
+  sensitive   = true
+}

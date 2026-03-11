@@ -92,12 +92,14 @@ maintainers to test your changes and to keep the examples up to date for users. 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | >= 3.0 |
 | <a name="requirement_yandex"></a> [yandex](#requirement\_yandex) | >= 0.47.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
+| <a name="provider_random"></a> [random](#provider\_random) | >= 3.0 |
 | <a name="provider_yandex"></a> [yandex](#provider\_yandex) | >= 0.47.0 |
 
 ## Modules
@@ -108,6 +110,7 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [random_password.user](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 | [yandex_mdb_redis_cluster.this](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/mdb_redis_cluster) | resource |
 | [yandex_mdb_redis_user.this](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/mdb_redis_user) | resource |
 
@@ -164,8 +167,8 @@ No modules.
 | <a name="input_turn_before_switchover"></a> [turn\_before\_switchover](#input\_turn\_before\_switchover) | Allows to turn before switchover in RDSync | `bool` | `false` | no |
 | <a name="input_type"></a> [type](#input\_type) | Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window | `string` | `"ANYTIME"` | no |
 | <a name="input_use_luajit"></a> [use\_luajit](#input\_use\_luajit) | Enable LuaJIT engine | `bool` | `false` | no |
-| <a name="input_user_name"></a> [user\_name](#input\_user\_name) | Name of the Redis user. Required together with user_password when provisioning | `string` | `null` | no |
-| <a name="input_user_password"></a> [user\_password](#input\_user\_password) | Password for the Redis user. Required together with user_name when provisioning | `string` | `null` | no |
+| <a name="input_user_name"></a> [user\_name](#input\_user\_name) | Name of the Redis user | `string` | `null` | no |
+| <a name="input_user_password"></a> [user\_password](#input\_user\_password) | Password for the Redis user. If not set with `user_name`, will be genereated randomly | `string` | `null` | no |
 | <a name="input_user_permissions_categories"></a> [user\_permissions\_categories](#input\_user\_permissions\_categories) | Redis command categories allowed for the user. Leave empty unless needed | `string` | `""` | no |
 | <a name="input_user_permissions_commands"></a> [user\_permissions\_commands](#input\_user\_permissions\_commands) | Redis commands allowed for the user (e.g. '+get +set') | `string` | `"+get +set"` | no |
 | <a name="input_user_permissions_patterns"></a> [user\_permissions\_patterns](#input\_user\_permissions\_patterns) | Key patterns allowed for the user. Must start with ~, %R~, %W~ or %RW~ (e.g. '~*' for all keys) | `string` | `"~*"` | no |
@@ -194,6 +197,7 @@ No modules.
 | <a name="output_security_group_ids"></a> [security\_group\_ids](#output\_security\_group\_ids) | A set of ids of security groups assigned to hosts of the cluster |
 | <a name="output_sharded"></a> [sharded](#output\_sharded) | Redis Cluster mode enabled/disabled |
 | <a name="output_tls_enabled"></a> [tls\_enabled](#output\_tls\_enabled) | TLS support mode enabled/disabled |
+| <a name="output_user_password"></a> [user\_password](#output\_user\_password) | Password of the Redis user (generated if not provided) |
 <!-- END_TF_DOCS -->
 
 ## License
