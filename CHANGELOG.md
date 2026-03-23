@@ -1,3 +1,7 @@
+## v1.58.0 - 2026-03-23
+### Miscellaneous
+- be0a6ed build(deps): bump actions/cache from 5.0.3 to 5.0.4 ([#73](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/73))
+
 ## v1.57.0 - 2026-03-11
 ### Bug Fixes
 - de531cd fix(redis-user): fix password check and change condition on whether to create a user from password to user_name ([#72](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/72))
