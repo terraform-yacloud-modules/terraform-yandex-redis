@@ -1,3 +1,7 @@
+## v1.59.0 - 2026-04-20
+### Miscellaneous
+- c120a77 build(deps): bump actions/cache from 5.0.4 to 5.0.5 ([#74](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/74))
+
 ## v1.58.0 - 2026-03-23
 ### Miscellaneous
 - be0a6ed build(deps): bump actions/cache from 5.0.3 to 5.0.4 ([#73](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/73))
