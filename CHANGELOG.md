@@ -1,3 +1,7 @@
+## v1.60.0 - 2026-06-22
+### Miscellaneous
+- d3188e5 build(deps): bump actions/checkout from 6 to 7 ([#75](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/75))
+
 ## v1.59.0 - 2026-04-20
 ### Miscellaneous
 - c120a77 build(deps): bump actions/cache from 5.0.4 to 5.0.5 ([#74](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/74))
