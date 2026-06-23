@@ -1,3 +1,13 @@
+## v1.61.0 - 2026-06-23
+### Features
+- cdef4f9 feat: migrate to yandex_mdb_redis_cluster_v2 and add Valkey modules support
+
+### Bug Fixes
+- 5607866 fix: make zone required, remove hardcoded default, expand validation
+
+### Miscellaneous
+- 4e4c86b Merge pull request [#76](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/76) from dbryuhanov542/feature/valkey-v2-modules
+
 ## v1.60.0 - 2026-06-22
 ### Miscellaneous
 - d3188e5 build(deps): bump actions/checkout from 6 to 7 ([#75](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/75))
