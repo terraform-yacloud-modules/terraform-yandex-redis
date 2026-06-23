@@ -1,3 +1,7 @@
+## v2.0.0 - 2026-06-23
+### Miscellaneous
+- d576aad [BUMP-MAJOR][RELEASE] make release
+
 ## v1.61.0 - 2026-06-23
 ### Features
 - cdef4f9 feat: migrate to yandex_mdb_redis_cluster_v2 and add Valkey modules support
