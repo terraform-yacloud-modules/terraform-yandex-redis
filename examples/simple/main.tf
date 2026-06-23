@@ -22,6 +22,7 @@ module "redis_simple" {
   source = "../../"
 
   name        = "cache"
+  zone        = "ru-central1-a"
   description = "Cache in-memory without sync to disk"
   folder_id   = data.yandex_client_config.client.folder_id
   network_id  = module.network.vpc_id

@@ -29,7 +29,7 @@ module "wrapper" {
   disk_type_id                      = try(each.value.disk_type_id, var.defaults.disk_type_id, "network-ssd")
   replica_priority                  = try(each.value.replica_priority, var.defaults.replica_priority, null)
   assign_public_ip                  = try(each.value.assign_public_ip, var.defaults.assign_public_ip, false)
-  zone                              = try(each.value.zone, var.defaults.zone, "ru-central1-a")
+  zone                              = try(each.value.zone, var.defaults.zone)
   type                              = try(each.value.type, var.defaults.type, "ANYTIME")
   hour                              = try(each.value.hour, var.defaults.hour, 0)
   day                               = try(each.value.day, var.defaults.day, "MON")

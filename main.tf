@@ -56,7 +56,7 @@ resource "yandex_mdb_redis_cluster_v2" "this" {
 
   hosts = {
     for host_key, host in var.hosts : host_key => {
-      zone      = lookup(host, "zone", var.zone)
+      zone      = lookup(host, "zone", try(var.zone, null))
       subnet_id = host.subnet_id
 
       shard_name = var.sharded ? lookup(host, "shard_name", "shard-${host_key}") : null

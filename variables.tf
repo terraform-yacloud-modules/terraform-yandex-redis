@@ -198,13 +198,16 @@ variable "assign_public_ip" {
 }
 
 variable "zone" {
-  description = "The availability zone where Redis hosts will be created when a host-specific zone is not provided. See https://cloud.yandex.com/en/docs/overview/concepts/geo-scope"
+  description = <<-EOT
+    The availability zone where Redis hosts will be created when a host-specific zone is not provided.
+    See https://cloud.yandex.com/en/docs/overview/concepts/geo-scope
+    Example values: ru-central1-a, ru-central1-b, ru-central1-d, ru-central1-e, kz1-a.
+  EOT
   type        = string
-  default     = "ru-central1-a"
 
   validation {
-    condition     = contains(["ru-central1-a", "ru-central1-b", "ru-central1-c", "ru-central1-d"], var.zone)
-    error_message = "Zone must be one of `ru-central1-a`, `ru-central1-b`, `ru-central1-c` or `ru-central1-d`."
+    condition     = can(regex("^[a-z]{2}(-[a-z0-9]+)*-([a-z])$", var.zone))
+    error_message = "Zone must be a valid Yandex Cloud availability zone (e.g. ru-central1-a, ru-central1-e, kz1-a)."
   }
 }
 

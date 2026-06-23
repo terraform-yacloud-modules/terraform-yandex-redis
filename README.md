@@ -173,7 +173,7 @@ No modules.
 | <a name="input_user_permissions_categories"></a> [user\_permissions\_categories](#input\_user\_permissions\_categories) | Redis command categories allowed for the user. Leave empty unless needed | `string` | `""` | no |
 | <a name="input_user_permissions_commands"></a> [user\_permissions\_commands](#input\_user\_permissions\_commands) | Redis commands allowed for the user (e.g. '+get +set') | `string` | `"+get +set"` | no |
 | <a name="input_user_permissions_patterns"></a> [user\_permissions\_patterns](#input\_user\_permissions\_patterns) | Key patterns allowed for the user. Must start with ~, %R~, %W~ or %RW~ (e.g. '~*' for all keys) | `string` | `"~*"` | no |
-| <a name="input_zone"></a> [zone](#input\_zone) | The availability zone where Redis hosts will be created when a host-specific zone is not provided. See https://cloud.yandex.com/en/docs/overview/concepts/geo-scope | `string` | `"ru-central1-a"` | no |
+| <a name="input_zone"></a> [zone](#input\_zone) | The availability zone where Redis hosts will be created when a host-specific zone is not provided.<br/>See https://cloud.yandex.com/en/docs/overview/concepts/geo-scope<br/>Example values: ru-central1-a, ru-central1-b, ru-central1-d, ru-central1-e, kz1-a. | `string` | n/a | yes |
 | <a name="input_zset_max_listpack_entries"></a> [zset\_max\_listpack\_entries](#input\_zset\_max\_listpack\_entries) | Controls max number of entries in zset before conversion | `number` | `128` | no |
 
 ## Outputs
