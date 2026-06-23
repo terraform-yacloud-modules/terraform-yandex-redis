@@ -197,6 +197,20 @@ variable "assign_public_ip" {
   default     = false
 }
 
+variable "zone" {
+  description = <<-EOT
+    The availability zone where Redis hosts will be created when a host-specific zone is not provided.
+    See https://cloud.yandex.com/en/docs/overview/concepts/geo-scope
+    Example values: ru-central1-a, ru-central1-b, ru-central1-d, ru-central1-e, kz1-a.
+  EOT
+  type        = string
+
+  validation {
+    condition     = can(regex("^[a-z]{2}(-[a-z0-9]+)*-([a-z])$", var.zone))
+    error_message = "Zone must be a valid Yandex Cloud availability zone (e.g. ru-central1-a, ru-central1-e, kz1-a)."
+  }
+}
+
 variable "type" {
   description = "Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window"
   type        = string
@@ -395,6 +409,24 @@ variable "access" {
   type = object({
     data_lens = optional(bool)
     web_sql   = optional(bool)
+  })
+  default = null
+}
+
+variable "modules" {
+  description = "Valkey modules configuration"
+  type = object({
+    valkey_search = optional(object({
+      enabled        = optional(bool)
+      reader_threads = optional(number)
+      writer_threads = optional(number)
+    }))
+    valkey_json = optional(object({
+      enabled = optional(bool)
+    }))
+    valkey_bloom = optional(object({
+      enabled = optional(bool)
+    }))
   })
   default = null
 }

@@ -22,6 +22,7 @@ module "redis_sharded" {
   source = "../.."
 
   name        = "sharded_cluster"
+  zone        = "ru-central1-a"
   description = "Sharded zonal cluster"
 
   network_id = module.network.vpc_id

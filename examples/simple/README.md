@@ -16,27 +16,27 @@ Note that this example may create resources which can cost money. Run `terraform
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
 | <a name="requirement_yandex"></a> [yandex](#requirement\_yandex) | >= 0.47.0 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="provider_yandex"></a> [yandex](#provider\_yandex) | >= 0.47.0 |
 
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | <a name="module_network"></a> [network](#module\_network) | git::https://github.com/terraform-yacloud-modules/terraform-yandex-vpc.git | v1.0.0 |
 | <a name="module_redis_simple"></a> [redis\_simple](#module\_redis\_simple) | ../../ | n/a |
 
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [yandex_client_config.client](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/data-sources/client_config) | data source |
 
 ## Inputs
@@ -46,7 +46,7 @@ No inputs.
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_config"></a> [config](#output\_config) | Configuration of the Redis cluster |
 | <a name="output_created_at"></a> [created\_at](#output\_created\_at) | Creation timestamp of the cluster |
 | <a name="output_deletion_protection"></a> [deletion\_protection](#output\_deletion\_protection) | Inhibits deletion of the cluster |

@@ -29,6 +29,7 @@ module "wrapper" {
   disk_type_id                      = try(each.value.disk_type_id, var.defaults.disk_type_id, "network-ssd")
   replica_priority                  = try(each.value.replica_priority, var.defaults.replica_priority, null)
   assign_public_ip                  = try(each.value.assign_public_ip, var.defaults.assign_public_ip, false)
+  zone                              = try(each.value.zone, var.defaults.zone)
   type                              = try(each.value.type, var.defaults.type, "ANYTIME")
   hour                              = try(each.value.hour, var.defaults.hour, 0)
   day                               = try(each.value.day, var.defaults.day, "MON")
@@ -41,4 +42,5 @@ module "wrapper" {
   disk_encryption_key_id            = try(each.value.disk_encryption_key_id, var.defaults.disk_encryption_key_id, null)
   disk_size_autoscaling             = try(each.value.disk_size_autoscaling, var.defaults.disk_size_autoscaling, null)
   access                            = try(each.value.access, var.defaults.access, null)
+  modules                           = try(each.value.modules, var.defaults.modules, null)
 }
