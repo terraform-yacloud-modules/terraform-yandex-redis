@@ -1,4 +1,4 @@
-resource "yandex_mdb_redis_cluster" "this" {
+resource "yandex_mdb_redis_cluster_v2" "this" {
   name        = var.name
   description = var.description
 
@@ -14,7 +14,7 @@ resource "yandex_mdb_redis_cluster" "this" {
   auth_sentinel          = var.auth_sentinel
   disk_encryption_key_id = var.disk_encryption_key_id
 
-  config {
+  config = {
     password = var.password
 
     version   = var.redis_version
@@ -42,31 +42,27 @@ resource "yandex_mdb_redis_cluster" "this" {
     io_threads_allowed                  = var.io_threads_allowed
     zset_max_listpack_entries           = var.zset_max_listpack_entries
 
-    dynamic "backup_window_start" {
-      for_each = var.backup_window_start != null ? [var.backup_window_start] : []
-      content {
-        hours   = backup_window_start.value.hours
-        minutes = lookup(backup_window_start.value, "minutes", null)
-      }
+    backup_window_start = var.backup_window_start == null ? null : {
+      hours   = var.backup_window_start.hours
+      minutes = coalesce(var.backup_window_start.minutes, 0)
     }
   }
 
-  resources {
+  resources = {
     resource_preset_id = var.resource_preset_id
     disk_size          = var.disk_size
     disk_type_id       = var.disk_type_id
   }
 
-  dynamic "host" {
-    for_each = var.hosts
-    content {
-      zone      = host.value.zone
-      subnet_id = host.value.subnet_id
+  hosts = {
+    for host_key, host in var.hosts : host_key => {
+      zone      = lookup(host, "zone", var.zone)
+      subnet_id = host.subnet_id
 
-      shard_name = var.sharded ? lookup(host.value, "shard_name", "shard-${host.key}") : null
+      shard_name = var.sharded ? lookup(host, "shard_name", "shard-${host_key}") : null
 
-      replica_priority = var.sharded ? null : lookup(host.value, "replica_priority", var.replica_priority)
-      assign_public_ip = var.tls_enabled ? lookup(host.value, "assign_public_ip", var.assign_public_ip) : false
+      replica_priority = var.sharded ? null : lookup(host, "replica_priority", var.replica_priority)
+      assign_public_ip = var.tls_enabled ? lookup(host, "assign_public_ip", var.assign_public_ip) : false
     }
   }
 
@@ -74,38 +70,20 @@ resource "yandex_mdb_redis_cluster" "this" {
 
   labels = var.labels
 
-  dynamic "access" {
-    for_each = var.access != null ? [var.access] : []
-    content {
-      data_lens = lookup(access.value, "data_lens", null)
-      web_sql   = lookup(access.value, "web_sql", null)
-    }
-  }
+  access = var.access
 
-  dynamic "disk_size_autoscaling" {
-    for_each = var.disk_size_autoscaling != null ? [var.disk_size_autoscaling] : []
-    content {
-      disk_size_limit           = disk_size_autoscaling.value.disk_size_limit
-      planned_usage_threshold   = lookup(disk_size_autoscaling.value, "planned_usage_threshold", null)
-      emergency_usage_threshold = lookup(disk_size_autoscaling.value, "emergency_usage_threshold", null)
-    }
-  }
+  disk_size_autoscaling = var.disk_size_autoscaling
 
-  maintenance_window {
+  maintenance_window = {
     type = var.type
 
     hour = var.type == "ANYTIME" ? null : var.hour
     day  = var.type == "ANYTIME" ? null : var.day
   }
 
-  dynamic "timeouts" {
-    for_each = var.timeouts != null ? [var.timeouts] : []
-    content {
-      create = timeouts.value.create
-      update = timeouts.value.update
-      delete = timeouts.value.delete
-    }
-  }
+  modules = var.modules
+
+  timeouts = var.timeouts
 }
 
 moved {
@@ -128,7 +106,7 @@ locals {
 resource "yandex_mdb_redis_user" "this" {
   count = var.user_name != null ? 1 : 0
 
-  cluster_id = yandex_mdb_redis_cluster.this.id
+  cluster_id = yandex_mdb_redis_cluster_v2.this.cluster_id
   name       = var.user_name
   passwords  = [local.user_password]
   permissions = {
