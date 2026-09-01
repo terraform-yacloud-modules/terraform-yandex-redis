@@ -1,9 +1,12 @@
 data "yandex_client_config" "client" {}
 
+provider "yandex" {
+}
+
 module "network" {
   source = "git::https://github.com/terraform-yacloud-modules/terraform-yandex-vpc.git?ref=v1.0.0"
 
-  folder_id = data.yandex_client_config.client.folder_id
+  folder_id = coalesce(var.folder_id, data.yandex_client_config.client.folder_id)
 
   blank_name = "redis-vpc-nat-gateway"
   labels = {
@@ -24,7 +27,7 @@ module "redis_simple" {
   name        = "cache"
   zone        = "ru-central1-a"
   description = "Cache in-memory without sync to disk"
-  folder_id   = data.yandex_client_config.client.folder_id
+  folder_id   = coalesce(var.folder_id, data.yandex_client_config.client.folder_id)
   network_id  = module.network.vpc_id
 
   persistence_mode = "OFF"
