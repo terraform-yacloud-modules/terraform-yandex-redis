@@ -116,9 +116,9 @@ variable "maxmemory_policy" {
 }
 
 variable "notify_keyspace_events" {
-  description = "Select the events that Redis will notify among a set of classes"
+  description = "Select the events that Redis will notify among a set of classes. Leave null (default) to not send the parameter to the Yandex Cloud API; sending an empty string is treated by the API as \"no change\" and fails with `FailedPrecondition: no changes detected` on clusters where the field is unset (e.g. after import)."
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "slowlog_log_slower_than" {
