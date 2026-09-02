@@ -1,3 +1,10 @@
+## v2.3.0 - 2026-09-02
+### Bug Fixes
+- 6fea280 fix: default notify_keyspace_events to null
+
+### Miscellaneous
+- 63d94d1 Merge pull request [#79](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/79) from dbryuhanov542/fix/notify-keyspace-events-noop-update
+
 ## v2.2.0 - 2026-09-01
 ### Bug Fixes
 - fc1b34a fix: передача folder_id в примере с приоритетом tfvars над YC_FOLDER_ID
