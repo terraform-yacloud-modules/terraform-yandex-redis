@@ -1,3 +1,7 @@
+## v2.4.0 - 2026-09-11
+### Bug Fixes
+- 89ac504 fix(kz-zone-validation): fix zone validation regex ([#80](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/80))
+
 ## v2.3.0 - 2026-09-02
 ### Bug Fixes
 - 6fea280 fix: default notify_keyspace_events to null
