@@ -206,7 +206,7 @@ variable "zone" {
   type        = string
 
   validation {
-    condition     = can(regex("^[a-z]{2}(-[a-z0-9]+)*-([a-z])$", var.zone))
+    condition     = can(regex("^[a-z]{2}([0-9]+|-[a-z0-9]+)*-([a-z])$", var.zone))
     error_message = "Zone must be a valid Yandex Cloud availability zone (e.g. ru-central1-a, ru-central1-e, kz1-a)."
   }
 }
