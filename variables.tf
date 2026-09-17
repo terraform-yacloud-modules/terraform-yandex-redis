@@ -431,14 +431,33 @@ variable "modules" {
   default = null
 }
 
+variable "users" {
+  description = "List of Redis users to create. Takes precedence over legacy single-user variables."
+  type = list(object({
+    name                   = string
+    password               = optional(string)
+    permissions_commands   = optional(string, "+get +set")
+    permissions_categories = optional(string, "")
+    permissions_patterns   = optional(string, "~*")
+  }))
+  default = []
+
+  validation {
+    condition = alltrue([
+      for user in var.users : try(user.password, null) == null || length(user.password) >= 8
+    ])
+    error_message = "Each user password must be at least 8 characters long when set."
+  }
+}
+
 variable "user_name" {
-  description = "Name of the Redis user"
+  description = "Name of the Redis user. Deprecated: use `users` list instead."
   type        = string
   default     = null
 }
 
 variable "user_password" {
-  description = "Password for the Redis user. If not set with `user_name`, will be genereated randomly"
+  description = "Password for the Redis user. If not set with `user_name`, will be generated randomly. Deprecated: use `users` list instead."
   type        = string
   sensitive   = true
   default     = null
@@ -450,19 +469,19 @@ variable "user_password" {
 }
 
 variable "user_permissions_commands" {
-  description = "Redis commands allowed for the user (e.g. '+get +set')"
+  description = "Redis commands allowed for the user (e.g. '+get +set'). Deprecated: use `users` list instead."
   type        = string
   default     = "+get +set"
 }
 
 variable "user_permissions_categories" {
-  description = "Redis command categories allowed for the user. Leave empty unless needed"
+  description = "Redis command categories allowed for the user. Leave empty unless needed. Deprecated: use `users` list instead."
   type        = string
   default     = ""
 }
 
 variable "user_permissions_patterns" {
-  description = "Key patterns allowed for the user. Must start with ~, %R~, %W~ or %RW~ (e.g. '~*' for all keys)"
+  description = "Key patterns allowed for the user. Must start with ~, %R~, %W~ or %RW~ (e.g. '~*' for all keys). Deprecated: use `users` list instead."
   type        = string
   default     = "~*"
 }

@@ -100,7 +100,17 @@ output "modules" {
 }
 
 output "user_password" {
-  description = "Password of the Redis user (generated if not provided)"
+  description = "Password of the Redis user (generated if not provided). Deprecated: use `users` output."
   value       = local.user_password
   sensitive   = true
+}
+
+output "users" {
+  description = "Map of Redis users with their passwords"
+  value = {
+    for name, password in local.user_passwords : name => {
+      password = password
+    }
+  }
+  sensitive = true
 }

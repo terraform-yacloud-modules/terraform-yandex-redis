@@ -91,27 +91,46 @@ moved {
   to   = yandex_mdb_redis_user.this[0]
 }
 
+locals {
+  legacy_users = var.user_name != null ? [{
+    name                   = var.user_name
+    password               = var.user_password
+    permissions_commands   = var.user_permissions_commands
+    permissions_categories = var.user_permissions_categories
+    permissions_patterns   = var.user_permissions_patterns
+  }] : []
+
+  users = length(var.users) > 0 ? var.users : local.legacy_users
+
+  user_passwords = {
+    for user in local.users : user.name => (
+      user.password == null ? random_password.user[user.name].result : user.password
+    )
+  }
+
+  user_password = try(
+    local.user_passwords[var.user_name],
+    length(local.user_passwords) == 1 ? one(values(local.user_passwords)) : null,
+  )
+}
+
 resource "random_password" "user" {
-  count = var.user_name != null ? 1 : 0
+  for_each = { for user in local.users : user.name => user if user.password == null }
 
   length           = 16
   special          = true
   override_special = "!#$%&*()-_=+[]{}<>:?"
 }
 
-locals {
-  user_password = var.user_password != null ? var.user_password : one(random_password.user[*].result)
-}
-
 resource "yandex_mdb_redis_user" "this" {
-  count = var.user_name != null ? 1 : 0
+  for_each = { for user in local.users : user.name => user }
 
   cluster_id = yandex_mdb_redis_cluster_v2.this.cluster_id
-  name       = var.user_name
-  passwords  = [local.user_password]
+  name       = each.value.name
+  passwords  = [local.user_passwords[each.value.name]]
   permissions = {
-    commands   = var.user_permissions_commands
-    categories = var.user_permissions_categories
-    patterns   = var.user_permissions_patterns != "*" ? var.user_permissions_patterns : "~*"
+    commands   = each.value.permissions_commands
+    categories = each.value.permissions_categories
+    patterns   = each.value.permissions_patterns != "*" ? each.value.permissions_patterns : "~*"
   }
 }

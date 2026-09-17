@@ -51,6 +51,18 @@ module "redis_sharded" {
     }
   }
 
-  user_name     = "redis-user"
-  user_password = "user-secret-password"
+  users = [
+    {
+      name                   = "reader"
+      password               = "reader-secret-password"
+      permissions_commands   = "+get +mget +exists"
+      permissions_patterns   = "~cache:*"
+    },
+    {
+      name                   = "writer"
+      password               = "writer-secret-password"
+      permissions_commands   = "+get +set +del"
+      permissions_patterns   = "~cache:*"
+    },
+  ]
 }
