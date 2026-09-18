@@ -1,3 +1,7 @@
+## v3.0.0 - 2026-09-18
+### Features
+- 2b49e9a feat!(redis-users): add multiple users creating via list with legacy compatibility ([#82](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/82))
+
 ## v2.4.0 - 2026-09-11
 ### Bug Fixes
 - 89ac504 fix(kz-zone-validation): fix zone validation regex ([#80](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/80))
