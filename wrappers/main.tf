@@ -43,4 +43,10 @@ module "wrapper" {
   disk_size_autoscaling             = try(each.value.disk_size_autoscaling, var.defaults.disk_size_autoscaling, null)
   access                            = try(each.value.access, var.defaults.access, null)
   modules                           = try(each.value.modules, var.defaults.modules, null)
+  users                             = try(each.value.users, var.defaults.users, [])
+  user_name                         = try(each.value.user_name, var.defaults.user_name, null)
+  user_password                     = try(each.value.user_password, var.defaults.user_password, null)
+  user_permissions_commands         = try(each.value.user_permissions_commands, var.defaults.user_permissions_commands, "+get +set")
+  user_permissions_categories       = try(each.value.user_permissions_categories, var.defaults.user_permissions_categories, "")
+  user_permissions_patterns         = try(each.value.user_permissions_patterns, var.defaults.user_permissions_patterns, "~*")
 }

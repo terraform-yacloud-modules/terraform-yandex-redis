@@ -168,11 +168,12 @@ No modules.
 | <a name="input_turn_before_switchover"></a> [turn\_before\_switchover](#input\_turn\_before\_switchover) | Allows to turn before switchover in RDSync | `bool` | `false` | no |
 | <a name="input_type"></a> [type](#input\_type) | Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window | `string` | `"ANYTIME"` | no |
 | <a name="input_use_luajit"></a> [use\_luajit](#input\_use\_luajit) | Enable LuaJIT engine | `bool` | `false` | no |
-| <a name="input_user_name"></a> [user\_name](#input\_user\_name) | Name of the Redis user | `string` | `null` | no |
-| <a name="input_user_password"></a> [user\_password](#input\_user\_password) | Password for the Redis user. If not set with `user_name`, will be genereated randomly | `string` | `null` | no |
-| <a name="input_user_permissions_categories"></a> [user\_permissions\_categories](#input\_user\_permissions\_categories) | Redis command categories allowed for the user. Leave empty unless needed | `string` | `""` | no |
-| <a name="input_user_permissions_commands"></a> [user\_permissions\_commands](#input\_user\_permissions\_commands) | Redis commands allowed for the user (e.g. '+get +set') | `string` | `"+get +set"` | no |
-| <a name="input_user_permissions_patterns"></a> [user\_permissions\_patterns](#input\_user\_permissions\_patterns) | Key patterns allowed for the user. Must start with ~, %R~, %W~ or %RW~ (e.g. '~*' for all keys) | `string` | `"~*"` | no |
+| <a name="input_users"></a> [users](#input\_users) | List of Redis users to create. | <pre>list(object({<br/>    name                   = string<br/>    password               = optional(string)<br/>    permissions_commands   = optional(string, "+get +set")<br/>    permissions_categories = optional(string, "")<br/>    permissions_patterns   = optional(string, "~*")<br/>  }))</pre> | `[]` | no |
+| <a name="input_user_name"></a> [user\_name](#input\_user\_name) | Name of the Redis user. Deprecated: use `users` list instead. | `string` | `null` | no |
+| <a name="input_user_password"></a> [user\_password](#input\_user\_password) | Password for the Redis user. If not set with `user_name`, will be generated randomly. Deprecated: use `users` list instead. | `string` | `null` | no |
+| <a name="input_user_permissions_categories"></a> [user\_permissions\_categories](#input\_user\_permissions\_categories) | Redis command categories allowed for the user. Leave empty unless needed. Deprecated: use `users` list instead. | `string` | `""` | no |
+| <a name="input_user_permissions_commands"></a> [user\_permissions\_commands](#input\_user\_permissions\_commands) | Redis commands allowed for the user (e.g. '+get +set'). Deprecated: use `users` list instead. | `string` | `"+get +set"` | no |
+| <a name="input_user_permissions_patterns"></a> [user\_permissions\_patterns](#input\_user\_permissions\_patterns) | Key patterns allowed for the user. Must start with ~, %R~, %W~ or %RW~ (e.g. '~*' for all keys). Deprecated: use `users` list instead. | `string` | `"~*"` | no |
 | <a name="input_zone"></a> [zone](#input\_zone) | The availability zone where Redis hosts will be created when a host-specific zone is not provided.<br/>See https://cloud.yandex.com/en/docs/overview/concepts/geo-scope<br/>Example values: ru-central1-a, ru-central1-b, ru-central1-d, ru-central1-e, kz1-a. | `string` | n/a | yes |
 | <a name="input_zset_max_listpack_entries"></a> [zset\_max\_listpack\_entries](#input\_zset\_max\_listpack\_entries) | Controls max number of entries in zset before conversion | `number` | `128` | no |
 
@@ -200,7 +201,8 @@ No modules.
 | <a name="output_security_group_ids"></a> [security\_group\_ids](#output\_security\_group\_ids) | A set of ids of security groups assigned to hosts of the cluster |
 | <a name="output_sharded"></a> [sharded](#output\_sharded) | Redis Cluster mode enabled/disabled |
 | <a name="output_tls_enabled"></a> [tls\_enabled](#output\_tls\_enabled) | TLS support mode enabled/disabled |
-| <a name="output_user_password"></a> [user\_password](#output\_user\_password) | Password of the Redis user (generated if not provided) |
+| <a name="output_user_password"></a> [user\_password](#output\_user\_password) | Password of the Redis user (generated if not provided). Deprecated: use `users` output when managing multiple users. | `string` | yes |
+| <a name="output_users"></a> [users](#output\_users) | Map of Redis users with their passwords | `map(object({ password = string }))` | yes |
 <!-- END_TF_DOCS -->
 
 ## License

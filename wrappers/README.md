@@ -42,6 +42,12 @@ inputs = {
     disk_size           = 16
     deletion_protection = true
     label               = merge(local.common_labels, local.custom_labels)
+    users = [
+      {
+        name     = "app"
+        password = "DontUseInProduction"
+      },
+    ]
   }
 
   items = {
@@ -50,6 +56,20 @@ inputs = {
       description               = "Cache without sync to disk"
       persistence_mode          = "OFF"
       password                  = "DontUseInProduction"
+      users = [
+        {
+          name                   = "reader"
+          password               = "DontUseInProduction"
+          permissions_commands   = "+get +mget"
+          permissions_patterns   = "~cache:*"
+        },
+        {
+          name                   = "writer"
+          password               = "DontUseInProduction"
+          permissions_commands   = "+get +set +del"
+          permissions_patterns   = "~cache:*"
+        },
+      ]
 
       hosts = {
         host1 = {

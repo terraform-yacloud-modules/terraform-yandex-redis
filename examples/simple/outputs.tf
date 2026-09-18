@@ -93,3 +93,9 @@ output "created_at" {
   description = "Creation timestamp of the cluster"
   value       = module.redis_simple.created_at
 }
+
+output "users" {
+  description = "Map of Redis users with their passwords"
+  value       = module.redis_simple.users
+  sensitive   = true
+}
