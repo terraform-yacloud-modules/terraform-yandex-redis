@@ -1,3 +1,7 @@
+## v3.1.0 - 2026-11-14
+### Bug Fixes
+- c13c232 fix: avoid empty security_group_ids and repair shared example ([#84](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/84))
+
 ## v3.0.0 - 2026-09-18
 ### Features
 - 2b49e9a feat!(redis-users): add multiple users creating via list with legacy compatibility ([#82](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/82))
