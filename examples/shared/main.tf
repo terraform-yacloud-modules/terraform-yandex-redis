@@ -13,9 +13,9 @@ module "network" {
     repo = "terraform-yacloud-modules/terraform-yandex-vpc"
   }
 
-  azs = ["ru-central1-a", "ru-central1-b", "ru-central1-d"]
+  azs = ["ru-central1-a", "ru-central1-d"]
 
-  private_subnets = [["10.4.0.0/24"], ["10.5.0.0/24"], ["10.6.0.0/24"]]
+  private_subnets = [["10.4.0.0/24"], ["10.6.0.0/24"]]
 
   create_vpc         = true
   create_nat_gateway = true
@@ -27,6 +27,7 @@ module "redis_sharded" {
   name        = "sharded_cluster"
   zone        = "ru-central1-a"
   description = "Sharded zonal cluster"
+  folder_id   = coalesce(var.folder_id, data.yandex_client_config.client.folder_id)
 
   network_id = module.network.vpc_id
 
@@ -42,27 +43,27 @@ module "redis_sharded" {
       subnet_id = module.network.private_subnets_ids[0]
     }
     host2 = {
-      zone      = "ru-central1-b"
+      zone      = "ru-central1-d"
       subnet_id = module.network.private_subnets_ids[1]
     }
     host3 = {
-      zone      = "ru-central1-d"
-      subnet_id = module.network.private_subnets_ids[2]
+      zone      = "ru-central1-a"
+      subnet_id = module.network.private_subnets_ids[0]
     }
   }
 
   users = [
     {
-      name                   = "reader"
-      password               = "reader-secret-password"
-      permissions_commands   = "+get +mget +exists"
-      permissions_patterns   = "~cache:*"
+      name                 = "reader"
+      password             = "reader-secret-password"
+      permissions_commands = "+get +mget +exists"
+      permissions_patterns = "~cache:*"
     },
     {
-      name                   = "writer"
-      password               = "writer-secret-password"
-      permissions_commands   = "+get +set +del"
-      permissions_patterns   = "~cache:*"
+      name                 = "writer"
+      password             = "writer-secret-password"
+      permissions_commands = "+get +set +del"
+      permissions_patterns = "~cache:*"
     },
   ]
 }

@@ -66,7 +66,10 @@ resource "yandex_mdb_redis_cluster_v2" "this" {
     }
   }
 
-  security_group_ids = var.security_group_ids
+  # Send null instead of an empty list: the API returns null for a cluster
+  # without security groups, and the provider then reports an inconsistent
+  # result after apply (empty set -> null).
+  security_group_ids = length(var.security_group_ids) > 0 ? var.security_group_ids : null
 
   labels = var.labels
 
