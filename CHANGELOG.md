@@ -1,3 +1,7 @@
+## v3.2.0 - 2026-11-15
+### Miscellaneous
+- 83310ee ci: запуск semver-джобы только при пуше в main ([#85](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/85))
+
 ## v3.1.0 - 2026-11-14
 ### Bug Fixes
 - c13c232 fix: avoid empty security_group_ids and repair shared example ([#84](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/pull/84))
