@@ -376,6 +376,17 @@ variable "backup_window_start" {
   }
 }
 
+variable "backup_retain_period_days" {
+  description = "Retain period of automatically created backups in days. Leave null to use the Yandex Cloud default"
+  type        = number
+  default     = null
+
+  validation {
+    condition     = var.backup_retain_period_days == null ? true : var.backup_retain_period_days >= 1
+    error_message = "Backup retain period must be at least 1 day when specified."
+  }
+}
+
 variable "announce_hostnames" {
   description = "Enable FQDN instead of IP addresses in CLUSTER SLOTS command"
   type        = bool
@@ -434,11 +445,14 @@ variable "modules" {
 variable "users" {
   description = "List of Redis users to create. Takes precedence over legacy single-user variables."
   type = list(object({
-    name                   = string
-    password               = optional(string)
-    permissions_commands   = optional(string, "+get +set")
-    permissions_categories = optional(string, "")
-    permissions_patterns   = optional(string, "~*")
+    name                         = string
+    password                     = optional(string)
+    enabled                      = optional(bool, true)
+    permissions_commands         = optional(string, "+get +set")
+    permissions_categories       = optional(string, "")
+    permissions_patterns         = optional(string, "~*")
+    permissions_databases        = optional(string, null)
+    permissions_pub_sub_channels = optional(string, null)
   }))
   default = []
 

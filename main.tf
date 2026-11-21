@@ -46,6 +46,7 @@ resource "yandex_mdb_redis_cluster_v2" "this" {
       hours   = var.backup_window_start.hours
       minutes = coalesce(var.backup_window_start.minutes, 0)
     }
+    backup_retain_period_days = var.backup_retain_period_days
   }
 
   resources = {
@@ -130,10 +131,13 @@ resource "yandex_mdb_redis_user" "this" {
 
   cluster_id = yandex_mdb_redis_cluster_v2.this.cluster_id
   name       = each.value.name
+  enabled    = try(each.value.enabled, true)
   passwords  = [local.user_passwords[each.value.name]]
   permissions = {
-    commands   = each.value.permissions_commands
-    categories = each.value.permissions_categories
-    patterns   = each.value.permissions_patterns != "*" ? each.value.permissions_patterns : "~*"
+    commands         = each.value.permissions_commands
+    categories       = each.value.permissions_categories
+    patterns         = each.value.permissions_patterns != "*" ? each.value.permissions_patterns : "~*"
+    databases        = try(each.value.permissions_databases, null)
+    pub_sub_channels = try(each.value.permissions_pub_sub_channels, null)
   }
 }

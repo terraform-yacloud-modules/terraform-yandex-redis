@@ -106,10 +106,19 @@ output "user_password" {
 }
 
 output "users" {
-  description = "Map of Redis users with their passwords"
+  description = "Map of Redis users with their passwords and permissions"
   value = {
-    for name, password in local.user_passwords : name => {
-      password = password
+    for user in local.users : user.name => {
+      password = local.user_passwords[user.name]
+      enabled  = try(user.enabled, true)
+
+      permissions = {
+        commands         = user.permissions_commands
+        categories       = user.permissions_categories
+        patterns         = user.permissions_patterns
+        databases        = try(user.permissions_databases, null)
+        pub_sub_channels = try(user.permissions_pub_sub_channels, null)
+      }
     }
   }
   sensitive = true

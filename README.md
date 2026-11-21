@@ -2,6 +2,33 @@
 
 Terraform module which creates Yandex Cloud [Managed Service for Redis](https://yandex.cloud/en/services/managed-redis) resources.
 
+## Описание
+
+Модуль создаёт кластер Yandex Managed Service for Redis (Valkey) и управляет им:
+
+- хостами в одной или нескольких зонах доступности, шардированием и репликами;
+- паролем кластера, ACL-пользователями и их правами;
+- резервным копированием: окно запуска и срок хранения копий;
+- автомасштабированием диска, дисковым шифрованием и защитой от удаления;
+- обслуживанием по расписанию, таймаутами операций и модулями Valkey.
+
+### Новые параметры
+
+В этой версии добавлены:
+
+- `backup_retain_period_days` — срок хранения автоматических резервных копий
+  в днях. Если параметр не задан, используется значение Yandex Cloud по
+  умолчанию.
+- `users[*].enabled` — позволяет временно отключить ACL-пользователя, не удаляя
+  его.
+- `users[*].permissions_databases` — базы данных, доступные пользователю:
+  `alldbs`, `resetdbs` или список номеров через запятую (например, `0,1,5`).
+- `users[*].permissions_pub_sub_channels` — шаблоны Pub/Sub-каналов, к которым
+  у пользователя есть доступ.
+
+Полный пример со всеми параметрами находится в
+[`examples/complete`](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/tree/main/examples/complete).
+
 ## Usage
 
 See [`examples`](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/tree/main/examples) directory for working examples to reference:
@@ -83,7 +110,8 @@ module. If contributing to the project, please be sure to make any appropriate u
 maintainers to test your changes and to keep the examples up to date for users. Thank you!
 
 - [Redis cluster without persistence](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/tree/main/examples/simple)
-- [Sharded Redis cluster](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/tree/main/examples/sharded)
+- [Sharded Redis cluster](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/tree/main/examples/shared)
+- [Complete Redis cluster](https://github.com/terraform-yacloud-modules/terraform-yandex-redis/tree/main/examples/complete)
 
 
 <!-- BEGIN_TF_DOCS -->
@@ -123,6 +151,7 @@ No modules.
 | <a name="input_announce_hostnames"></a> [announce\_hostnames](#input\_announce\_hostnames) | Enable FQDN instead of IP addresses in CLUSTER SLOTS command | `bool` | `false` | no |
 | <a name="input_assign_public_ip"></a> [assign\_public\_ip](#input\_assign\_public\_ip) | Sets whether the host should get a public IP address or not | `bool` | `false` | no |
 | <a name="input_auth_sentinel"></a> [auth\_sentinel](#input\_auth\_sentinel) | Allow ACL based authentication in Redis Sentinel | `bool` | `false` | no |
+| <a name="input_backup_retain_period_days"></a> [backup\_retain\_period\_days](#input\_backup\_retain\_period\_days) | Retain period of automatically created backups in days. Leave null to use the Yandex Cloud default | `number` | `null` | no |
 | <a name="input_backup_window_start"></a> [backup\_window\_start](#input\_backup\_window\_start) | Time to start the daily backup, in the UTC timezone. The structure is documented below | <pre>object({<br/>    hours   = number<br/>    minutes = optional(number)<br/>  })</pre> | `null` | no |
 | <a name="input_client_output_buffer_limit_normal"></a> [client\_output\_buffer\_limit\_normal](#input\_client\_output\_buffer\_limit\_normal) | Normal clients output buffer limits (bytes) | `string` | `"1073741824 536870912 60"` | no |
 | <a name="input_client_output_buffer_limit_pubsub"></a> [client\_output\_buffer\_limit\_pubsub](#input\_client\_output\_buffer\_limit\_pubsub) | Pubsub clients output buffer limits (bytes) | `string` | `"1073741824 536870912 60"` | no |
@@ -168,12 +197,12 @@ No modules.
 | <a name="input_turn_before_switchover"></a> [turn\_before\_switchover](#input\_turn\_before\_switchover) | Allows to turn before switchover in RDSync | `bool` | `false` | no |
 | <a name="input_type"></a> [type](#input\_type) | Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window | `string` | `"ANYTIME"` | no |
 | <a name="input_use_luajit"></a> [use\_luajit](#input\_use\_luajit) | Enable LuaJIT engine | `bool` | `false` | no |
-| <a name="input_users"></a> [users](#input\_users) | List of Redis users to create. | <pre>list(object({<br/>    name                   = string<br/>    password               = optional(string)<br/>    permissions_commands   = optional(string, "+get +set")<br/>    permissions_categories = optional(string, "")<br/>    permissions_patterns   = optional(string, "~*")<br/>  }))</pre> | `[]` | no |
 | <a name="input_user_name"></a> [user\_name](#input\_user\_name) | Name of the Redis user. Deprecated: use `users` list instead. | `string` | `null` | no |
 | <a name="input_user_password"></a> [user\_password](#input\_user\_password) | Password for the Redis user. If not set with `user_name`, will be generated randomly. Deprecated: use `users` list instead. | `string` | `null` | no |
 | <a name="input_user_permissions_categories"></a> [user\_permissions\_categories](#input\_user\_permissions\_categories) | Redis command categories allowed for the user. Leave empty unless needed. Deprecated: use `users` list instead. | `string` | `""` | no |
 | <a name="input_user_permissions_commands"></a> [user\_permissions\_commands](#input\_user\_permissions\_commands) | Redis commands allowed for the user (e.g. '+get +set'). Deprecated: use `users` list instead. | `string` | `"+get +set"` | no |
 | <a name="input_user_permissions_patterns"></a> [user\_permissions\_patterns](#input\_user\_permissions\_patterns) | Key patterns allowed for the user. Must start with ~, %R~, %W~ or %RW~ (e.g. '~*' for all keys). Deprecated: use `users` list instead. | `string` | `"~*"` | no |
+| <a name="input_users"></a> [users](#input\_users) | List of Redis users to create. Takes precedence over legacy single-user variables. | <pre>list(object({<br/>    name                         = string<br/>    password                     = optional(string)<br/>    enabled                      = optional(bool, true)<br/>    permissions_commands         = optional(string, "+get +set")<br/>    permissions_categories       = optional(string, "")<br/>    permissions_patterns         = optional(string, "~*")<br/>    permissions_databases        = optional(string, null)<br/>    permissions_pub_sub_channels = optional(string, null)<br/>  }))</pre> | `[]` | no |
 | <a name="input_zone"></a> [zone](#input\_zone) | The availability zone where Redis hosts will be created when a host-specific zone is not provided.<br/>See https://cloud.yandex.com/en/docs/overview/concepts/geo-scope<br/>Example values: ru-central1-a, ru-central1-b, ru-central1-d, ru-central1-e, kz1-a. | `string` | n/a | yes |
 | <a name="input_zset_max_listpack_entries"></a> [zset\_max\_listpack\_entries](#input\_zset\_max\_listpack\_entries) | Controls max number of entries in zset before conversion | `number` | `128` | no |
 
@@ -201,8 +230,8 @@ No modules.
 | <a name="output_security_group_ids"></a> [security\_group\_ids](#output\_security\_group\_ids) | A set of ids of security groups assigned to hosts of the cluster |
 | <a name="output_sharded"></a> [sharded](#output\_sharded) | Redis Cluster mode enabled/disabled |
 | <a name="output_tls_enabled"></a> [tls\_enabled](#output\_tls\_enabled) | TLS support mode enabled/disabled |
-| <a name="output_user_password"></a> [user\_password](#output\_user\_password) | Password of the Redis user (generated if not provided). Deprecated: use `users` output when managing multiple users. | `string` | yes |
-| <a name="output_users"></a> [users](#output\_users) | Map of Redis users with their passwords | `map(object({ password = string }))` | yes |
+| <a name="output_user_password"></a> [user\_password](#output\_user\_password) | Password of the Redis user (generated if not provided). Deprecated: use `users` output. |
+| <a name="output_users"></a> [users](#output\_users) | Map of Redis users with their passwords and permissions |
 <!-- END_TF_DOCS -->
 
 ## License
